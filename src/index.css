@@ -11,6 +11,7 @@
   --font-mono: 'JetBrains Mono', monospace;
 
   --animate-shimmer: shimmer 1.8s infinite linear;
+  --animate-border-glow: border-glow 8s ease infinite;
 
   @keyframes shimmer {
     0% {
@@ -18,6 +19,15 @@
     }
     100% {
       background-position: -200% 0;
+    }
+  }
+
+  @keyframes border-glow {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
     }
   }
 }
