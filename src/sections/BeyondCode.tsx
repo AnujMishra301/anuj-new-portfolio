@@ -2,56 +2,70 @@ import { motion } from 'framer-motion'
 import { BookOpen, PenTool, Film, Clock, Scale, Cpu, Sparkles, Quote } from 'lucide-react'
 
 interface InterestItem {
+  index: string
   title: string
   icon: React.ReactNode
   description: string
-  accent: 'blue' | 'purple' | 'green' | 'rose' | 'amber' | 'cyan'
-  glowClass: string
+  accent: 'emerald' | 'purple' | 'rose' | 'blue' | 'amber' | 'cyan'
+  accentGlow: string
+  gridClass: string
 }
 
 export default function BeyondCode() {
   const interests: InterestItem[] = [
     {
+      index: "01",
       title: "Literature",
       icon: <BookOpen className="w-5 h-5 text-emerald-400" />,
-      accent: "green",
-      glowClass: "hover:border-emerald-500/30 hover:shadow-emerald-500/5",
-      description: "Diving into classic novels, translations, and moral philosophy to observe how language shapes empathy, ideas, and human complexity.",
+      accent: "emerald",
+      accentGlow: "hover:border-emerald-500/30 hover:shadow-emerald-500/5",
+      gridClass: "lg:col-span-1",
+      description: "An exploration of classic novels, existential philosophy, and translation theory. Delving into the written word to analyze how narratives construct human empathy, structural logic, and social codes.",
     },
     {
+      index: "02",
       title: "Writing",
       icon: <PenTool className="w-5 h-5 text-purple-400" />,
       accent: "purple",
-      glowClass: "hover:border-purple-500/30 hover:shadow-purple-500/5",
-      description: "Expressing thoughts through essays, notes, and technical articles. Writing serves as a canvas to organize complex layouts of logic.",
+      accentGlow: "hover:border-purple-500/30 hover:shadow-purple-500/5",
+      gridClass: "lg:col-span-1",
+      description: "Articulating ideas through structured essays and analytical notes. Writing functions as an execution compile of complex internal states, translating scattered logic into clear, readable concepts.",
     },
     {
+      index: "03",
       title: "Cinema",
       icon: <Film className="w-5 h-5 text-rose-400" />,
       accent: "rose",
-      glowClass: "hover:border-rose-500/30 hover:shadow-rose-500/5",
-      description: "Analyzing scene composition, screenwriting structures, and directorial styles. Viewing cinema as a study in observation.",
+      accentGlow: "hover:border-rose-500/30 hover:shadow-rose-500/5",
+      gridClass: "lg:col-span-1",
+      description: "An investigation of visual syntax, framing geometry, and narrative pacing. Studying screenplay architectures and scene compositions as deliberate acts of spatial and behavioral observation.",
     },
     {
+      index: "04",
       title: "History",
       icon: <Clock className="w-5 h-5 text-blue-400" />,
       accent: "blue",
-      glowClass: "hover:border-blue-500/30 hover:shadow-blue-500/5",
-      description: "Examining historical cycles, the birth of computing systems, and institutional shifts to map how today's paradigms took shape.",
+      accentGlow: "hover:border-blue-500/30 hover:shadow-blue-500/5",
+      gridClass: "lg:col-span-1",
+      description: "Tracing technological revolutions, systemic cycles, and structural evolutions. Studying the past to map how historical systems and policy networks dictate current civilization-scale pipelines.",
     },
     {
+      index: "05",
       title: "Politics",
       icon: <Scale className="w-5 h-5 text-amber-400" />,
       accent: "amber",
-      glowClass: "hover:border-amber-500/30 hover:shadow-amber-500/5",
-      description: "Understanding governing frameworks, resource structures, and the systemic laws that dictate modern societal development.",
+      accentGlow: "hover:border-amber-500/30 hover:shadow-amber-500/5",
+      gridClass: "lg:col-span-1",
+      description: "Analyzing governance frameworks, institutional power grids, and resources distribution laws. Exploring the systemic engines that dictate cooperation, conflict, and societal infrastructure.",
     },
     {
+      index: "06",
       title: "Technology",
       icon: <Cpu className="w-5 h-5 text-cyan-400" />,
       accent: "cyan",
-      glowClass: "hover:border-cyan-500/30 hover:shadow-cyan-500/5",
-      description: "Interpreting technology not just as code, but as a lever of human leverage, cultural shift, and civilization-scale progress.",
+      accentGlow: "hover:border-cyan-500/30 hover:shadow-cyan-500/5",
+      gridClass: "lg:col-span-3",
+      description: "Viewing code not merely as static logic, but as an active lever of human leverage, computational scaling, and cultural transformation that redraws the boundaries of human capacity and progress.",
     },
   ]
 
@@ -78,6 +92,15 @@ export default function BeyondCode() {
       y: 0,
       transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const },
     },
+  }
+
+  const badgeGlows = {
+    emerald: "bg-emerald-500/10 border-emerald-500/20 text-emerald-400",
+    purple: "bg-purple-500/10 border-purple-500/20 text-purple-400",
+    rose: "bg-rose-500/10 border-rose-500/20 text-rose-400",
+    blue: "bg-blue-500/10 border-blue-500/20 text-blue-400",
+    amber: "bg-amber-500/10 border-amber-500/20 text-amber-400",
+    cyan: "bg-cyan-500/10 border-cyan-500/20 text-cyan-400",
   }
 
   return (
@@ -115,11 +138,11 @@ export default function BeyondCode() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-muted text-base md:text-lg leading-relaxed"
           >
-            Ideas, stories, history, cinema and curiosity.
+            Ideas, stories, history, cinema and intellectual curiosity.
           </motion.p>
         </div>
 
-        {/* Bento Grid */}
+        {/* Bento Magazine Grid */}
         <motion.div 
           variants={containerVariants}
           initial="hidden"
@@ -130,35 +153,49 @@ export default function BeyondCode() {
           {/* Featured Card: Satyajit Ray */}
           <motion.div
             variants={cardVariants}
-            className="relative overflow-hidden rounded-2xl bg-surface/30 backdrop-blur-xl border border-accent/20 hover:border-accent/40 shadow-2xl p-8 flex flex-col justify-between hover:scale-[1.01] hover:shadow-accent/5 transition-all duration-300 md:col-span-2 group"
+            className="relative overflow-hidden rounded-3xl bg-surface/35 backdrop-blur-2xl border border-accent/20 hover:border-accent/40 shadow-2xl p-8 sm:p-10 flex flex-col justify-between hover:scale-[1.01] hover:shadow-accent/5 transition-all duration-500 lg:col-span-2 lg:row-span-2 group min-h-[420px]"
           >
             {/* Soft backdrop glow */}
             <div className="absolute inset-0 bg-gradient-to-br from-accent/10 via-purple-500/5 to-transparent pointer-events-none" />
 
-            <div className="space-y-6 relative z-10 flex flex-col h-full justify-between">
+            <div className="space-y-8 relative z-10 flex flex-col h-full justify-between">
+              
+              {/* Header block */}
               <div className="flex justify-between items-start">
-                <div className="flex items-center gap-3">
-                  <div className="w-11 h-11 rounded-xl bg-surface border border-accent/20 flex items-center justify-center group-hover:border-accent/35 transition-colors duration-300">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-2xl bg-[#0b1329]/90 border border-accent/20 flex items-center justify-center group-hover:border-accent/40 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                     <Film className="w-6 h-6 text-accent" />
                   </div>
-                  <div className="text-left">
-                    <span className="text-[10px] font-mono tracking-widest text-accent uppercase font-bold">
+                  <div className="text-left space-y-0.5">
+                    <span className="text-[9px] font-mono tracking-widest text-accent uppercase font-bold bg-accent/10 border border-accent/20 px-2.5 py-0.5 rounded-full">
                       Featured Catalyst
                     </span>
-                    <h3 className="text-2xl font-black text-text tracking-tight group-hover:text-accent transition-colors duration-300">
+                    <h3 className="text-3xl font-black text-text tracking-tight group-hover:text-accent transition-colors duration-300 pt-1">
                       Satyajit Ray
                     </h3>
                   </div>
                 </div>
-                <Quote className="w-8 h-8 text-text/5 group-hover:text-accent/10 transition-colors duration-300" />
+                <Quote className="w-10 h-10 text-text/5 group-hover:text-accent/10 transition-colors duration-300" />
               </div>
 
-              <p className="text-muted text-base sm:text-lg leading-relaxed text-left max-w-xl">
-                Filmmaker whose work shaped my appreciation for observation, simplicity and storytelling. His humanistic cinema serves as a blueprint for looking closely at the details of human interactions.
+              {/* Central cinematic quote block */}
+              <div className="space-y-3 pl-4 border-l-2 border-accent/20 my-2">
+                <p className="text-sm sm:text-base italic font-serif text-text/90 leading-relaxed text-left">
+                  "The details of everyday life are what make a film true, what make a story breathe. Simplicity is the most difficult thing to secure."
+                </p>
+                <div className="text-[10px] font-mono text-muted tracking-wider text-left">
+                  — SATYAJIT RAY // ON DESIGN & Restraint
+                </div>
+              </div>
+
+              {/* Description statement */}
+              <p className="text-muted text-sm sm:text-base leading-relaxed text-left max-w-xl">
+                A legendary filmmaker, writer, and composer whose humanistic cinema shaped my outlook on observation, restraint, and composition. Ray's work acts as a system design blueprint: extracting profound meaning from raw human behavior and configuring simple layouts that prioritize storytelling clarity.
               </p>
 
-              <div className="flex items-center gap-2 text-xs font-semibold font-mono text-accent/80 group-hover:text-accent transition-colors duration-300">
-                <span>OBSERVATION // SIMPLICITY // STORYTELLING</span>
+              {/* Bottom tag indicators */}
+              <div className="flex items-center gap-2 text-[10px] font-semibold font-mono tracking-widest text-accent/80 group-hover:text-accent transition-colors duration-300 uppercase">
+                <span>Observation // Restraint // Simplicity</span>
               </div>
             </div>
 
@@ -171,21 +208,31 @@ export default function BeyondCode() {
             <motion.div
               key={idx}
               variants={cardVariants}
-              className={`relative overflow-hidden rounded-2xl bg-surface/30 backdrop-blur-xl border border-text/10 p-6 flex flex-col justify-between hover:scale-[1.02] hover:shadow-2xl transition-all duration-300 group ${item.glowClass}`}
+              className={`relative overflow-hidden rounded-3xl bg-surface/30 backdrop-blur-xl border border-text/10 p-8 flex flex-col justify-between hover:scale-[1.02] hover:shadow-2xl transition-all duration-500 group ${item.accentGlow} ${item.gridClass}`}
             >
               {/* Radial Highlight Glow */}
               <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
-              <div className="space-y-4 relative z-10 flex flex-col justify-between h-full">
+              {/* Huge Background Index Number */}
+              <span className="absolute bottom-2 right-4 text-7xl md:text-8xl font-black font-mono text-text/5 select-none pointer-events-none group-hover:text-accent/10 transition-colors duration-500">
+                {item.index}
+              </span>
+
+              <div className="space-y-6 relative z-10 flex flex-col justify-between h-full">
                 
                 {/* Header row */}
-                <div className="flex items-center gap-3 border-b border-text/5 pb-3">
-                  <div className="w-9 h-9 rounded-lg bg-surface border border-text/10 flex items-center justify-center group-hover:border-accent/20 transition-colors duration-300">
-                    {item.icon}
+                <div className="flex items-center justify-between border-b border-text/5 pb-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-[#0b1329]/90 border border-text/10 flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                      {item.icon}
+                    </div>
+                    <h3 className="text-lg font-black text-text group-hover:text-accent transition-colors duration-300 text-left">
+                      {item.title}
+                    </h3>
                   </div>
-                  <h3 className="font-bold text-text group-hover:text-accent transition-colors duration-300 text-left">
-                    {item.title}
-                  </h3>
+                  <span className={`px-2 py-0.5 rounded text-[8px] font-mono tracking-wider border uppercase ${badgeGlows[item.accent]}`}>
+                    Perspective
+                  </span>
                 </div>
 
                 {/* Description */}
@@ -201,12 +248,12 @@ export default function BeyondCode() {
         </motion.div>
 
         {/* Topics I Think About section */}
-        <div className="pt-10 border-t border-text/5 space-y-6 max-w-4xl mx-auto">
+        <div className="pt-12 border-t border-text/5 space-y-6 max-w-4xl mx-auto">
           <motion.h3 
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            className="text-lg font-bold text-text tracking-wider uppercase font-mono text-center md:text-left"
+            className="text-xs font-bold text-accent tracking-widest uppercase font-mono text-center md:text-left"
           >
             Topics I Think About
           </motion.h3>
@@ -221,9 +268,9 @@ export default function BeyondCode() {
             {topics.map((topic, idx) => (
               <span 
                 key={idx}
-                className="px-4 py-2 rounded-xl bg-surface/40 backdrop-blur-md border border-text/10 text-sm font-semibold text-muted hover:text-accent hover:border-accent/20 hover:scale-[1.02] hover:shadow-lg hover:shadow-accent/5 transition-all duration-300 cursor-default"
+                className="px-4 py-2 rounded-xl bg-surface/40 backdrop-blur-md border border-text/10 text-xs font-bold font-mono text-muted hover:text-accent hover:border-accent/25 hover:scale-[1.02] hover:shadow-lg hover:shadow-accent/5 transition-all duration-300 cursor-default"
               >
-                {topic}
+                # {topic.toUpperCase()}
               </span>
             ))}
           </motion.div>
