@@ -23,6 +23,9 @@ export default function Timeline() {
 
   // Transform the scaleY of the drawing path
   const scaleY = useTransform(scrollYProgress, [0.05, 0.85], [0, 1])
+  
+  // Transform the top position of the glowing scroll-riding orb
+  const orbTop = useTransform(scrollYProgress, [0.05, 0.85], ["0%", "100%"])
 
   const entries: TimelineEntry[] = [
     {
@@ -57,8 +60,8 @@ export default function Timeline() {
       subtitle: "Practical Systems & Backend Focus",
       icon: <Terminal className="w-5 h-5 text-purple-400" />,
       bullets: [
-        "Built BlackBoxCV (AI/NLP-powered resume screen analyzer)",
-        "Built Sentinel AI (flagship code authenticity machine learning platform)",
+        "Built BlackBoxCV (AI/NLP resume screening analyzer)",
+        "Built Sentinel AI (flagship AI-powered code authenticity platform)",
         "Started Backend Development using high-throughput Node.js & Express architectures",
       ],
       accent: "purple",
@@ -66,12 +69,12 @@ export default function Timeline() {
     },
     {
       year: "Future",
-      title: "Open Source & Scaled Systems",
+      title: "Open Source & Backend Systems",
       subtitle: "GSoC Engagement & AI Applications",
       icon: <Rocket className="w-5 h-5 text-amber-400" />,
       bullets: [
         "Contribute to complex Open Source systems and backend servers",
-        "Target Google Summer of Code (GSoC) projects",
+        "Target Google Summer of Code (GSoC) programs",
         "Engineer high-performance backend systems and production-grade AI applications",
       ],
       accent: "yellow",
@@ -151,6 +154,12 @@ export default function Timeline() {
             className="absolute left-4 md:left-1/2 -translate-x-[1px] top-4 bottom-4 w-[2px] bg-gradient-to-b from-accent via-purple-500 to-transparent" 
           />
 
+          {/* Cinematic scroll-riding glowing orb */}
+          <motion.div 
+            style={{ top: orbTop }}
+            className="absolute left-4 md:left-1/2 -translate-x-1/2 w-3.5 h-3.5 rounded-full bg-accent shadow-[0_0_15px_#38bdf8] z-30 pointer-events-none"
+          />
+
           {/* Staggered Timeline entries */}
           <motion.div 
             variants={containerVariants}
@@ -168,7 +177,7 @@ export default function Timeline() {
                   className={`relative flex flex-col md:flex-row items-stretch ${isEven ? 'md:flex-row-reverse' : ''} gap-8 md:gap-0`}
                 >
                   {/* Glowing Node on the line */}
-                  <div className="absolute left-4 md:left-1/2 -translate-x-1/2 top-6 z-20">
+                  <div className="absolute left-4 md:left-1/2 -translate-x-1/2 top-6 z-25">
                     <motion.div 
                       initial={{ scale: 0.5, opacity: 0 }}
                       whileInView={{ scale: 1, opacity: 1 }}
@@ -204,14 +213,14 @@ export default function Timeline() {
                         {/* Meta header */}
                         <div className="flex items-center justify-between border-b border-text/5 pb-3">
                           <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-xl bg-surface border border-text/10 flex items-center justify-center group-hover:border-accent/25 transition-colors duration-300">
+                            <div className="w-10 h-10 rounded-xl bg-surface border border-text/10 flex items-center justify-center group-hover:border-accent/25 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                               {entry.icon}
                             </div>
                             <div className="text-left">
-                              <h3 className="font-bold text-text group-hover:text-accent transition-colors duration-300">
+                              <h3 className="font-bold text-text group-hover:text-accent transition-colors duration-300 text-left">
                                 {entry.title}
                               </h3>
-                              <p className="text-xs text-muted">
+                              <p className="text-xs text-muted text-left">
                                 {entry.subtitle}
                               </p>
                             </div>
