@@ -5,40 +5,42 @@ import { Sparkles, Terminal, AlertCircle, RefreshCw } from 'lucide-react'
 import { github } from '../data/socialLinks'
 
 const StatsSkeleton = () => (
-  <div className="w-full h-full p-6 flex flex-col justify-between space-y-4 animate-pulse bg-[#0b1329]/40">
-    <div className="grid grid-cols-2 gap-4">
+  <div className="w-full h-full p-6 flex flex-col justify-between space-y-3 animate-pulse bg-[#0b1329]/40">
+    <div className="space-y-3">
       {[...Array(4)].map((_, i) => (
-        <div key={i} className="space-y-2">
-          <div className="h-2.5 w-16 bg-text/10 rounded" />
-          <div className="h-5 w-24 bg-text/20 rounded" />
+        <div key={i} className="flex items-center justify-between border-b border-text/5 pb-2">
+          <div className="flex items-center gap-2">
+            <div className="w-3.5 h-3.5 rounded bg-text/10" />
+            <div className="h-3 w-24 bg-text/10 rounded" />
+          </div>
+          <div className="h-3 w-12 bg-text/20 rounded" />
         </div>
       ))}
     </div>
-    <div className="h-2 w-full bg-text/10 rounded" />
   </div>
 )
 
 const StreakSkeleton = () => (
   <div className="w-full h-full p-6 flex items-center justify-around space-x-4 animate-pulse bg-[#0b1329]/40">
     {[...Array(3)].map((_, i) => (
-      <div key={i} className="flex flex-col items-center space-y-3">
-        <div className="h-8 w-8 bg-text/10 rounded-full" />
-        <div className="h-4 w-12 bg-text/20 rounded" />
-        <div className="h-2.5 w-16 bg-text/10 rounded" />
+      <div key={i} className="flex flex-col items-center space-y-2">
+        <div className="h-2 w-16 bg-text/10 rounded" />
+        <div className="h-6 w-12 bg-text/25 rounded" />
+        <div className="h-2 w-20 bg-text/10 rounded" />
       </div>
     ))}
   </div>
 )
 
 const LanguagesSkeleton = () => (
-  <div className="w-full h-full p-6 flex flex-col justify-center space-y-3 animate-pulse bg-[#0b1329]/40">
+  <div className="w-full h-full p-6 flex flex-col justify-center space-y-3.5 animate-pulse bg-[#0b1329]/40">
     {[...Array(3)].map((_, i) => (
       <div key={i} className="space-y-2">
         <div className="flex justify-between items-center">
-          <div className="h-3 w-16 bg-text/20 rounded" />
+          <div className="h-3 w-16 bg-text/25 rounded" />
           <div className="h-2.5 w-8 bg-text/10 rounded" />
         </div>
-        <div className="h-2 w-full bg-text/10 rounded-full overflow-hidden">
+        <div className="h-2.5 w-full bg-text/10 rounded-full overflow-hidden">
           <div className="h-full bg-text/20 rounded-full" style={{ width: i === 0 ? '70%' : i === 1 ? '45%' : '25%' }} />
         </div>
       </div>
