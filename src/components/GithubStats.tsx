@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Github } from './Icons'
-import { Sparkles, Terminal, AlertCircle, RefreshCw } from 'lucide-react'
+import { Sparkles, Terminal } from 'lucide-react'
 import { github } from '../data/socialLinks'
 
 const StatsSkeleton = () => (
@@ -53,18 +53,9 @@ export default function GithubStats() {
   const [streakLoaded, setStreakLoaded] = useState(false)
   const [langsLoaded, setLangsLoaded] = useState(false)
 
-  const [statsError, setStatsError] = useState(false)
-  const [streakError, setStreakError] = useState(false)
-  const [langsError, setLangsError] = useState(false)
-
-  const [statsRetry, setStatsRetry] = useState(0)
-  const [streakRetry, setStreakRetry] = useState(0)
-  const [langsRetry, setLangsRetry] = useState(0)
-
-  // Custom themed SVG URLs matching the portfolio colors with cache-busting retry parameters
-  const statsUrl = `https://github-readme-stats.vercel.app/api?username=AnujMishra301&bg_color=0f172a&title_color=38bdf8&text_color=e2e8f0&icon_color=38bdf8&hide_border=true&show_icons=true&retry=${statsRetry}`
-  const languagesUrl = `https://github-readme-stats.vercel.app/api/top-langs/?username=AnujMishra301&layout=compact&bg_color=0f172a&title_color=38bdf8&text_color=e2e8f0&icon_color=38bdf8&hide_border=true&retry=${langsRetry}`
-  const streakUrl = `https://github-readme-streak-stats.herokuapp.com/?user=AnujMishra301&background=0f172a&title=38bdf8&currStreakNum=e2e8f0&currStreakLabel=94a3b8&sideNums=e2e8f0&sideLabels=94a3b8&dates=94a3b8&ring=38bdf8&fire=38bdf8&stroke=0f172a&hide_border=true&retry=${streakRetry}`
+  const statsUrl = "https://github-readme-stats.vercel.app/api?username=AnujMishra301&show_icons=true&theme=transparent"
+  const languagesUrl = "https://github-readme-stats.vercel.app/api/top-langs/?username=AnujMishra301&layout=compact&theme=transparent"
+  const streakUrl = "https://streak-stats.demolab.com?user=AnujMishra301&theme=transparent"
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -137,11 +128,11 @@ export default function GithubStats() {
             className="relative overflow-hidden rounded-2xl bg-surface/30 backdrop-blur-xl border border-text/10 p-6 flex flex-col hover:border-accent/20 transition-all duration-300 group"
           >
             <div className="flex items-center justify-between border-b border-text/5 pb-4 mb-6">
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 text-left">
                 <div className="w-9 h-9 rounded-lg bg-surface border border-text/10 flex items-center justify-center group-hover:border-accent/20 transition-colors duration-300">
                   <Github className="w-5 h-5 text-text" />
                 </div>
-                <div className="text-left">
+                <div>
                   <h3 className="font-bold text-text group-hover:text-accent transition-colors duration-300">
                     Profile Stats
                   </h3>
@@ -154,39 +145,17 @@ export default function GithubStats() {
 
             {/* Content & Loader Container */}
             <div className="relative w-full aspect-[480/195] bg-[#0b1329]/20 rounded-xl border border-text/5 overflow-hidden">
-              {/* Show image when loaded & no error */}
-              {!statsError && (
-                <img 
-                  src={statsUrl} 
-                  alt="GitHub Profile Stats" 
-                  className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-500 z-20 ${statsLoaded ? 'opacity-100' : 'opacity-0'}`}
-                  onLoad={() => setStatsLoaded(true)}
-                  onError={() => setStatsError(true)}
-                />
-              )}
+              <img 
+                src={statsUrl} 
+                alt="GitHub Profile Stats" 
+                className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-500 z-20 ${statsLoaded ? 'opacity-100' : 'opacity-0'}`}
+                onLoad={() => setStatsLoaded(true)}
+              />
 
-              {/* Show Loading Skeleton OR Error Placeholder State */}
-              {(statsError || !statsLoaded) && (
+              {/* Show Loading Skeleton */}
+              {!statsLoaded && (
                 <div className="absolute inset-0 w-full h-full bg-surface/10 z-10">
                   <StatsSkeleton />
-                  
-                  {statsError && (
-                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-surface/60 backdrop-blur-[2px] p-4 text-center z-30">
-                      <AlertCircle className="w-6 h-6 text-accent/80 mb-2" />
-                      <p className="text-xs font-semibold text-text mb-3">GitHub metrics temporarily unavailable.</p>
-                      <button 
-                        onClick={() => {
-                          setStatsError(false)
-                          setStatsLoaded(false)
-                          setStatsRetry(prev => prev + 1)
-                        }}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface hover:bg-surface/80 border border-text/10 hover:border-accent/30 text-xs font-medium text-text transition-colors duration-300"
-                      >
-                        <RefreshCw className="w-3.5 h-3.5" />
-                        <span>Retry</span>
-                      </button>
-                    </div>
-                  )}
                 </div>
               )}
             </div>
@@ -198,15 +167,15 @@ export default function GithubStats() {
             className="relative overflow-hidden rounded-2xl bg-surface/30 backdrop-blur-xl border border-text/10 p-6 flex flex-col hover:border-accent/20 transition-all duration-300 group"
           >
             <div className="flex items-center justify-between border-b border-text/5 pb-4 mb-6">
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 text-left">
                 <div className="w-9 h-9 rounded-lg bg-surface border border-text/10 flex items-center justify-center group-hover:border-accent/20 transition-colors duration-300">
                   <Terminal className="w-5 h-5 text-accent" />
                 </div>
-                <div className="text-left">
-                  <h3 className="font-bold text-text group-hover:text-accent transition-colors duration-300 text-left">
+                <div>
+                  <h3 className="font-bold text-text group-hover:text-accent transition-colors duration-300">
                     Commit Streak
                   </h3>
-                  <p className="text-[10px] text-muted font-mono tracking-wider uppercase text-left">
+                  <p className="text-[10px] text-muted font-mono tracking-wider uppercase">
                     Active Pipeline
                   </p>
                 </div>
@@ -215,39 +184,17 @@ export default function GithubStats() {
 
             {/* Content & Loader Container */}
             <div className="relative w-full aspect-[480/195] bg-[#0b1329]/20 rounded-xl border border-text/5 overflow-hidden">
-              {/* Show image when loaded & no error */}
-              {!streakError && (
-                <img 
-                  src={streakUrl} 
-                  alt="GitHub Commit Streak" 
-                  className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-500 z-20 ${streakLoaded ? 'opacity-100' : 'opacity-0'}`}
-                  onLoad={() => setStreakLoaded(true)}
-                  onError={() => setStreakError(true)}
-                />
-              )}
+              <img 
+                src={streakUrl} 
+                alt="GitHub Commit Streak" 
+                className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-500 z-20 ${streakLoaded ? 'opacity-100' : 'opacity-0'}`}
+                onLoad={() => setStreakLoaded(true)}
+              />
 
-              {/* Show Loading Skeleton OR Error Placeholder State */}
-              {(streakError || !streakLoaded) && (
+              {/* Show Loading Skeleton */}
+              {!streakLoaded && (
                 <div className="absolute inset-0 w-full h-full bg-surface/10 z-10">
                   <StreakSkeleton />
-                  
-                  {streakError && (
-                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-surface/60 backdrop-blur-[2px] p-4 text-center z-30">
-                      <AlertCircle className="w-6 h-6 text-accent/80 mb-2" />
-                      <p className="text-xs font-semibold text-text mb-3">GitHub metrics temporarily unavailable.</p>
-                      <button 
-                        onClick={() => {
-                          setStreakError(false)
-                          setStreakLoaded(false)
-                          setStreakRetry(prev => prev + 1)
-                        }}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface hover:bg-surface/80 border border-text/10 hover:border-accent/30 text-xs font-medium text-text transition-colors duration-300"
-                      >
-                        <RefreshCw className="w-3.5 h-3.5" />
-                        <span>Retry</span>
-                      </button>
-                    </div>
-                  )}
                 </div>
               )}
             </div>
@@ -259,15 +206,15 @@ export default function GithubStats() {
             className="relative overflow-hidden rounded-2xl bg-surface/30 backdrop-blur-xl border border-text/10 p-6 flex flex-col hover:border-accent/20 transition-all duration-300 group lg:col-span-2 max-w-3xl mx-auto w-full"
           >
             <div className="flex items-center justify-between border-b border-text/5 pb-4 mb-6">
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 text-left">
                 <div className="w-9 h-9 rounded-lg bg-surface border border-text/10 flex items-center justify-center group-hover:border-accent/20 transition-colors duration-300">
                   <Github className="w-5 h-5 text-text" />
                 </div>
-                <div className="text-left">
-                  <h3 className="font-bold text-text group-hover:text-accent transition-colors duration-300 text-left">
+                <div>
+                  <h3 className="font-bold text-text group-hover:text-accent transition-colors duration-300">
                     Top Languages
                   </h3>
-                  <p className="text-[10px] text-muted font-mono tracking-wider uppercase text-left">
+                  <p className="text-[10px] text-muted font-mono tracking-wider uppercase">
                     Language Distribution
                   </p>
                 </div>
@@ -276,39 +223,17 @@ export default function GithubStats() {
 
             {/* Content & Loader Container */}
             <div className="relative w-full aspect-[480/120] sm:aspect-[480/100] md:aspect-[480/80] bg-[#0b1329]/20 rounded-xl border border-text/5 overflow-hidden">
-              {/* Show image when loaded & no error */}
-              {!langsError && (
-                <img 
-                  src={languagesUrl} 
-                  alt="GitHub Top Languages" 
-                  className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-500 z-20 ${langsLoaded ? 'opacity-100' : 'opacity-0'}`}
-                  onLoad={() => setLangsLoaded(true)}
-                  onError={() => setLangsError(true)}
-                />
-              )}
+              <img 
+                src={languagesUrl} 
+                alt="GitHub Top Languages" 
+                className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-500 z-20 ${langsLoaded ? 'opacity-100' : 'opacity-0'}`}
+                onLoad={() => setLangsLoaded(true)}
+              />
 
-              {/* Show Loading Skeleton OR Error Placeholder State */}
-              {(langsError || !langsLoaded) && (
+              {/* Show Loading Skeleton */}
+              {!langsLoaded && (
                 <div className="absolute inset-0 w-full h-full bg-surface/10 z-10">
                   <LanguagesSkeleton />
-                  
-                  {langsError && (
-                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-surface/60 backdrop-blur-[2px] p-4 text-center z-30">
-                      <AlertCircle className="w-6 h-6 text-accent/80 mb-2" />
-                      <p className="text-xs font-semibold text-text mb-3">GitHub metrics temporarily unavailable.</p>
-                      <button 
-                        onClick={() => {
-                          setLangsError(false)
-                          setLangsLoaded(false)
-                          setLangsRetry(prev => prev + 1)
-                        }}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface hover:bg-surface/80 border border-text/10 hover:border-accent/30 text-xs font-medium text-text transition-colors duration-300"
-                      >
-                        <RefreshCw className="w-3.5 h-3.5" />
-                        <span>Retry</span>
-                      </button>
-                    </div>
-                  )}
                 </div>
               )}
             </div>

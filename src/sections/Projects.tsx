@@ -1,21 +1,8 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { ExternalLink, HelpCircle, ToggleLeft, Award, Activity, CheckCircle2, RefreshCw } from 'lucide-react'
+import { ExternalLink, HelpCircle, ToggleLeft, Award, Activity, CheckCircle2, FileText, Terminal, Cpu, Sparkles } from 'lucide-react'
 
-interface Project {
-  name: string
-  category: string
-  status: string
-  statusType: 'active' | 'completed' | 'ongoing'
-  problem: string
-  solution: string
-  impact: string
-  techStack: string[]
-  github: string
-  external: string
-  accent: 'blue' | 'green' | 'purple'
-  accentGradients: string
-}
+// Unused Project interface removed
 
 export default function Projects() {
   const [coords, setCoords] = useState({ x: 0, y: 0 })
@@ -66,53 +53,7 @@ export default function Projects() {
     Integration: ["GitHub API", "Vercel"],
   }
 
-  const projectsList: Project[] = [
-    {
-      name: "BlackBoxCV",
-      category: "AI / NLP",
-      status: "Active Development",
-      statusType: "active",
-      problem: "Most students do not understand how recruiters and ATS systems evaluate resumes.",
-      solution: "Built an NLP-powered resume screening analyzer using semantic similarity scoring and recruiter-style evaluation logic.",
-      impact: "Provides detailed resume feedback and helps users understand resume strengths and weaknesses.",
-      techStack: ["Python", "Streamlit", "Sentence Transformers", "NLP", "Scikit-Learn"],
-      github: "https://github.com/AnujMishra301/BlackBoxCV",
-      external: "https://github.com/AnujMishra301/BlackBoxCV",
-      accent: "blue",
-      accentGradients: "from-blue-500/10 via-cyan-500/5 to-transparent",
-    },
-    {
-      name: "Real-Time Low Voltage Line Fault Detection System",
-      category: "IoT / Embedded Systems",
-      status: "Completed",
-      statusType: "completed",
-      problem: "Manual detection of power line faults is slow and inefficient.",
-      solution: "Built a NodeMCU-based fault detection system capable of identifying faults in real time.",
-      impact: "Reduced fault identification time from hours to under five seconds.",
-      techStack: ["C++", "NodeMCU", "HTML", "CSS", "JavaScript"],
-      github: "https://github.com/AnujMishra301/Fault-Detection-System-Low-Voltage",
-      external: "https://github.com/AnujMishra301/Fault-Detection-System-Low-Voltage",
-      accent: "green",
-      accentGradients: "from-emerald-500/10 via-green-500/5 to-transparent",
-    },
-  ]
-
-  const borderGlows = {
-    blue: "hover:border-blue-500/30",
-    green: "hover:border-emerald-500/30",
-    purple: "hover:border-purple-500/30",
-  }
-
-  const getStatusIcon = (type: Project['statusType']) => {
-    switch (type) {
-      case 'active':
-        return <Activity className="w-3.5 h-3.5 animate-pulse text-blue-400" />
-      case 'completed':
-        return <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-      case 'ongoing':
-        return <RefreshCw className="w-3.5 h-3.5 text-purple-400" />
-    }
-  }
+  // Project elements rendered explicitly below in bento layout
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -177,7 +118,7 @@ export default function Projects() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-1 lg:grid-cols-2 gap-8"
         >
           {/* Card 1: Sentinel AI Flagship Project Card (Spans 2 columns on desktop) */}
           <motion.div
@@ -197,259 +138,473 @@ export default function Projects() {
             <div className="absolute top-[20%] right-[10%] w-[350px] h-[350px] bg-accent/10 rounded-full blur-[90px] opacity-0 group-hover:opacity-100 transition-all duration-700 pointer-events-none" />
 
             {/* Inner Card Container */}
-            <div className="relative rounded-[22px] bg-[#070b19]/98 backdrop-blur-2xl p-8 sm:p-10 flex flex-col lg:flex-row gap-10 lg:gap-14 text-left z-20 h-full">
-              {/* Left side: Flagship details, Problem/Solution, Actions */}
-              <div className="flex-1 space-y-6 flex flex-col justify-between">
-                <div className="space-y-6">
+            <div className="relative rounded-[22px] bg-[#070b19]/98 backdrop-blur-2xl p-6 sm:p-8 grid grid-cols-1 lg:grid-cols-3 gap-8 text-left z-20 h-full">
+              
+              {/* Column 1: Title, Tagline, Problem statement */}
+              <div className="space-y-6 flex flex-col justify-between">
+                <div className="space-y-4">
                   {/* Badges */}
-                  <div className="flex flex-wrap items-center gap-3">
-                    <span className="relative inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent text-background font-black text-[10px] tracking-widest uppercase shadow-[0_0_15px_rgba(56,189,248,0.4)]">
-                      <Award className="w-3.5 h-3.5 animate-pulse" />
-                      <span>★ FEATURED FLAGSHIP PROJECT</span>
-                    </span>
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface border border-text/10 text-[10px] font-bold text-muted uppercase font-mono">
-                      <Activity className="w-3.5 h-3.5 text-accent animate-pulse" />
-                      <span>Active Development</span>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="relative inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent text-background font-black text-[9px] tracking-widest uppercase shadow-[0_0_15px_rgba(56,189,248,0.4)]">
+                      <Award className="w-3 h-3 animate-pulse" />
+                      <span>★ FEATURED FLAGSHIP</span>
                     </span>
                   </div>
 
                   {/* Name & Tagline */}
-                  <div className="space-y-3">
-                    <h3 className="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-none bg-gradient-to-r from-white via-text to-accent bg-clip-text text-transparent group-hover:from-accent group-hover:to-purple-400 transition-all duration-500">
+                  <div className="space-y-2">
+                    <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-none bg-gradient-to-r from-white via-text to-accent bg-clip-text text-transparent group-hover:from-accent group-hover:to-purple-400 transition-all duration-500">
                       Sentinel AI
                     </h3>
-                    <p className="text-muted text-lg sm:text-xl font-medium leading-relaxed">
+                    <p className="text-muted text-xs sm:text-sm font-semibold leading-relaxed">
                       AI-powered code authenticity analysis and software trust platform.
                     </p>
                   </div>
-
-                  {/* Problem, Solution, Impact Blocks */}
-                  <div className="space-y-5 pt-6 border-t border-text/5">
-                    {/* Problem */}
-                    <div className="group/pillar bg-red-500/5 hover:bg-red-500/10 border border-red-500/10 hover:border-red-500/20 p-5 rounded-2xl transition-all duration-300">
-                      <div className="flex items-center gap-2 text-xs font-black text-red-400 uppercase tracking-widest mb-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-red-400 animate-ping" />
-                        <HelpCircle className="w-4 h-4" />
-                        <span>The Author Integrity Crisis</span>
-                      </div>
-                      <p className="text-muted group-hover/pillar:text-text/90 text-sm sm:text-base leading-relaxed transition-colors duration-300">
-                        The proliferation of generative AI has democratized coding but introduces an existential challenge: the erosion of code authorship verification. Academic institutions struggle with undetected plagiarism, recruiters face candidates with hyper-inflated technical portfolios, and software enterprises risk compliance violations, intellectual property contamination, and code license leakage.
-                      </p>
-                    </div>
-
-                    {/* Solution */}
-                    <div className="group/pillar bg-accent/5 hover:bg-accent/10 border border-accent/10 hover:border-accent/20 p-5 rounded-2xl transition-all duration-300">
-                      <div className="flex items-center gap-2 text-xs font-black text-accent uppercase tracking-widest mb-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-accent animate-ping" />
-                        <ToggleLeft className="w-4 h-4" />
-                        <span>Ast-Driven Trust Engine</span>
-                      </div>
-                      <p className="text-text/95 group-hover/pillar:text-white text-sm sm:text-base leading-relaxed transition-colors duration-300">
-                        Developed <span className="text-accent font-semibold">Sentinel AI</span>, a developer trust platform designed to verify code authenticity. Utilizing structural Abstract Syntax Tree (AST) comparisons, language model probability scoring, and advanced NLP classifiers, it maps code syntax entropy, token frequency anomalies, and lexical fingerprints to generate a granular authenticity index.
-                      </p>
-                    </div>
-
-                    {/* Impact */}
-                    <div className="group/pillar bg-emerald-500/5 hover:bg-emerald-500/10 border border-emerald-500/10 hover:border-emerald-500/20 p-5 rounded-2xl transition-all duration-300">
-                      <div className="flex items-center gap-2 text-xs font-black text-emerald-400 uppercase tracking-widest mb-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                        <Award className="w-4 h-4" />
-                        <span>Verifiable Ecosystem Trust</span>
-                      </div>
-                      <p className="text-emerald-300/90 group-hover/pillar:text-emerald-300 text-sm sm:text-base leading-relaxed font-semibold transition-colors duration-300">
-                        Re-establishes trust in the software ecosystem. It provides universities with verifiable academic integrity metrics, enables talent acquisition teams to run high-fidelity credential screens, and offers enterprises an automated compliance sentinel that guarantees clean code provenance and mitigates commercial IP liabilities.
-                      </p>
-                    </div>
-                  </div>
                 </div>
 
-                {/* Action Buttons */}
-                <div className="flex flex-wrap items-center gap-3 pt-6 border-t border-text/5">
-                  <a
-                    href="https://github.com/AnujMishra301/ai-code-detector"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 min-w-[140px] flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-accent text-background font-bold text-xs transition-all duration-300 hover:bg-accent/90 hover:shadow-lg hover:shadow-accent/10 hover:scale-[1.02]"
-                  >
-                    <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                      <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                    </svg>
-                    <span>GitHub Repository</span>
-                  </a>
-                  <a
-                    href="#"
-                    className="flex-1 min-w-[140px] flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-surface/80 border border-text/10 text-xs font-bold text-text transition-all duration-300 hover:bg-surface hover:border-text/20 hover:scale-[1.02]"
-                  >
-                    <ExternalLink className="w-4 h-4 text-accent" />
-                    <span>Live Demo</span>
-                  </a>
-                  <a
-                    href="#casestudy"
-                    className="flex-1 min-w-[140px] flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-surface/40 border border-text/10 text-xs font-bold text-muted transition-all duration-300 hover:bg-surface/60 hover:text-text hover:scale-[1.02] opacity-75"
-                  >
-                    <span>Case Study</span>
-                    <span className="text-[9px] font-mono tracking-wider bg-surface/80 border border-text/5 px-1.5 rounded uppercase text-accent ml-1.5">WIP</span>
-                  </a>
+                {/* Problem Statement Card */}
+                <div className="group/pillar bg-red-500/5 hover:bg-red-500/10 border border-red-500/10 hover:border-red-500/20 p-4 sm:p-5 rounded-2xl transition-all duration-300">
+                  <div className="flex items-center gap-2 text-[10px] font-black text-red-400 uppercase tracking-widest mb-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-400 animate-ping" />
+                    <HelpCircle className="w-3.5 h-3.5" />
+                    <span>The Integrity Crisis</span>
+                  </div>
+                  <p className="text-muted group-hover/pillar:text-text/90 text-xs sm:text-sm leading-relaxed transition-colors duration-300">
+                    Generative AI has blurred the lines of authorship. Academics face rampant plagiarism, hiring managers get hyper-inflated portfolios, and software companies risk license contamination from unverified third-party repositories.
+                  </p>
                 </div>
               </div>
 
-              {/* Right side: Key Features & Technical categorization */}
-              <div className="w-full lg:w-[45%] flex flex-col gap-6 justify-between border-t lg:border-t-0 lg:border-l border-text/5 pt-8 lg:pt-0 lg:pl-10 h-full">
-                {/* Features List */}
-                <div className="space-y-4">
-                  <h4 className="text-xs font-mono font-bold tracking-widest text-accent uppercase">
-                    Key Capabilities
-                  </h4>
-                  <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-2.5 text-left">
-                    {featuredFeatures.map((feat, idx) => (
-                      <li key={idx} className="flex items-start gap-2 text-sm text-muted group-hover:text-text/90 transition-colors duration-300">
-                        <span className="w-4 h-4 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center text-[9px] font-bold text-accent mt-0.5 shrink-0">
-                          ✓
-                        </span>
+              {/* Column 2: Key capabilities, Technical architecture flowchart, Stack badges */}
+              <div className="space-y-6 flex flex-col justify-between border-t lg:border-t-0 lg:border-l lg:border-r border-text/5 pt-6 lg:pt-0 lg:px-6">
+                
+                {/* Capabilities */}
+                <div className="space-y-3">
+                  <h4 className="text-[10px] font-mono font-bold tracking-widest text-accent uppercase">Key Capabilities</h4>
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-1.5 text-left">
+                    {featuredFeatures.slice(0, 5).map((feat, idx) => (
+                      <li key={idx} className="flex items-start gap-2 text-xs text-muted hover:text-text/90 transition-colors duration-300">
+                        <span className="w-3.5 h-3.5 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center text-[8px] font-bold text-accent mt-0.5 shrink-0">✓</span>
                         <span>{feat}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                {/* Tech Stack Bento categorization */}
-                <div className="space-y-4 pt-6 border-t border-text/5">
-                  <h4 className="text-xs font-mono font-bold tracking-widest text-accent uppercase">
-                    Tech Architecture
-                  </h4>
-                  <div className="grid grid-cols-2 gap-4 text-left">
-                    {Object.entries(featuredTech).map(([category, items]) => (
-                      <div key={category} className="space-y-2">
-                        <span className="text-[10px] font-bold tracking-wider text-muted uppercase block">
-                          {category}
-                        </span>
-                        <div className="flex flex-wrap gap-1">
-                          {items.map((item, itemIdx) => (
-                            <span 
-                              key={itemIdx}
-                              className="px-2 py-0.5 rounded bg-surface/60 border border-text/5 text-[10px] font-semibold text-text"
-                            >
-                              {item}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    ))}
+                {/* Visual Architecture Diagram */}
+                <div className="space-y-3 pt-4 border-t border-text/5 text-left">
+                  <h4 className="text-[10px] font-mono font-bold tracking-widest text-accent uppercase">System Pipeline</h4>
+                  <div className="flex flex-wrap sm:flex-nowrap items-center justify-between gap-1.5 bg-surface/50 border border-text/5 rounded-xl p-2.5 text-[8px] font-mono text-muted relative overflow-hidden">
+                    <div className="flex flex-col items-center gap-0.5 group/node">
+                      <span className="px-1 py-0.5 rounded bg-surface border border-text/10 text-text group-hover/node:border-accent/30 transition-all">Code</span>
+                    </div>
+                    <span className="text-accent/60">➔</span>
+                    <div className="flex flex-col items-center gap-0.5 group/node">
+                      <span className="px-1 py-0.5 rounded bg-surface border border-text/10 text-text group-hover/node:border-accent/30 transition-all">AST</span>
+                    </div>
+                    <span className="text-accent/60">➔</span>
+                    <div className="flex flex-col items-center gap-0.5 group/node">
+                      <span className="px-1 py-0.5 rounded bg-surface border border-text/10 text-text group-hover/node:border-accent/30 transition-all">NLP</span>
+                    </div>
+                    <span className="text-accent/60">➔</span>
+                    <div className="flex flex-col items-center gap-0.5 group/node">
+                      <span className="px-1 py-0.5 rounded bg-surface border border-text/10 text-text group-hover/node:border-accent/30 transition-all">Model</span>
+                    </div>
+                    <span className="text-accent/60">➔</span>
+                    <div className="flex flex-col items-center gap-0.5 group/node">
+                      <span className="px-1 py-0.5 rounded bg-accent/15 border border-accent/25 text-accent font-bold group-hover/node:scale-105 transition-all">Score</span>
+                    </div>
                   </div>
+                </div>
+
+                {/* Tech Stack Badges */}
+                <div className="space-y-3 pt-4 border-t border-text/5 text-left">
+                  <h4 className="text-[10px] font-mono font-bold tracking-widest text-accent uppercase">Technology Stack</h4>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2">
+                      <span className="px-1.5 py-0.5 rounded bg-surface border border-text/10 text-[8px] font-mono font-semibold text-accent shrink-0 w-14 text-center">Frontend</span>
+                      <div className="flex flex-wrap gap-0.5">
+                        {featuredTech.Frontend.map((t) => (
+                          <span key={t} className="px-1 py-0.5 rounded bg-surface/40 text-[8px] font-medium text-muted border border-text/5">{t}</span>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="px-1.5 py-0.5 rounded bg-surface border border-text/10 text-[8px] font-mono font-semibold text-indigo-400 shrink-0 w-14 text-center">Backend</span>
+                      <div className="flex flex-wrap gap-0.5">
+                        {featuredTech.Backend.map((t) => (
+                          <span key={t} className="px-1 py-0.5 rounded bg-surface/40 text-[8px] font-medium text-muted border border-text/5">{t}</span>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="px-1.5 py-0.5 rounded bg-surface border border-text/10 text-[8px] font-mono font-semibold text-purple-400 shrink-0 w-14 text-center">AI / ML</span>
+                      <div className="flex flex-wrap gap-0.5">
+                        {featuredTech["AI / ML"].slice(0, 3).map((t) => (
+                          <span key={t} className="px-1 py-0.5 rounded bg-surface/40 text-[8px] font-medium text-muted border border-text/5">{t}</span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Column 3: Impact, Status & Metrics dashboard, Project links */}
+              <div className="space-y-6 flex flex-col justify-between border-t lg:border-t-0 lg:border-l border-text/5 pt-6 lg:pt-0 lg:pl-6">
+                
+                {/* Impact Statement Card */}
+                <div className="group/pillar bg-emerald-500/5 hover:bg-emerald-500/10 border border-emerald-500/10 hover:border-emerald-500/20 p-4 sm:p-5 rounded-2xl transition-all duration-300">
+                  <div className="flex items-center gap-2 text-[10px] font-black text-emerald-400 uppercase tracking-widest mb-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    <Award className="w-3.5 h-3.5" />
+                    <span>Ecosystem Trust</span>
+                  </div>
+                  <p className="text-emerald-300/90 group-hover/pillar:text-emerald-300 text-xs sm:text-sm leading-relaxed transition-colors duration-300">
+                    Re-establishes trust in modern software repositories. Delivers verifiable integrity checks for academic portals, recruitment pipelines, and corporate supply chains.
+                  </p>
+                </div>
+
+                {/* Status & Metrics Board */}
+                <div className="space-y-3 pt-4 border-t border-text/5 text-left">
+                  <h4 className="text-[10px] font-mono font-bold tracking-widest text-accent uppercase">Project Status & Metrics</h4>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="p-2 rounded-xl bg-surface/50 border border-text/5 space-y-0.5">
+                      <span className="text-[7px] font-bold tracking-wider text-muted uppercase block">Dev Status</span>
+                      <span className="text-[10px] font-bold text-text flex items-center gap-1">
+                        <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+                        <span>Active Beta</span>
+                      </span>
+                    </div>
+                    <div className="p-2 rounded-xl bg-surface/50 border border-text/5 space-y-0.5">
+                      <span className="text-[7px] font-bold tracking-wider text-muted uppercase block">Accuracy</span>
+                      <span className="text-[10px] font-bold text-emerald-400">94.2% Class</span>
+                    </div>
+                    <div className="p-2 rounded-xl bg-surface/50 border border-text/5 col-span-2 space-y-0.5">
+                      <span className="text-[7px] font-bold tracking-wider text-muted uppercase block">Future Roadmap</span>
+                      <span className="text-[9px] text-muted leading-tight block">Cross-language AST checks & VSCode plugin extension</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Action Link Buttons */}
+                <div className="flex flex-col gap-2 pt-4 border-t border-text/5">
+                  <div className="flex items-center gap-2">
+                    <a
+                      href="https://github.com/AnujMishra301/ai-code-detector"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-accent text-background font-bold text-[10px] transition-all hover:bg-accent/90 hover:scale-[1.01]"
+                    >
+                      <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                      </svg>
+                      <span>Repository</span>
+                    </a>
+                    <a
+                      href="#"
+                      className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-surface/80 border border-text/10 text-[10px] font-bold text-text transition-all hover:bg-surface hover:scale-[1.01]"
+                    >
+                      <ExternalLink className="w-3.5 h-3.5 text-accent" />
+                      <span>Live Demo</span>
+                    </a>
+                  </div>
+                  <a
+                    href="#casestudy"
+                    className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-surface/30 border border-text/10 text-[10px] font-bold text-muted transition-all hover:bg-surface/50 opacity-75"
+                  >
+                    <span>Case Study</span>
+                    <span className="text-[8px] font-mono tracking-wider bg-surface/60 border border-text/5 px-1.5 rounded uppercase text-accent ml-1.5">WIP</span>
+                  </a>
                 </div>
               </div>
             </div>
           </motion.div>
 
-          {/* Mapped standard projects (BlackBoxCV and Fault Detection System - Column 3 of Row 1 and Column 1 of Row 2) */}
-          {projectsList.map((project, idx) => (
-            <motion.div
-              key={idx}
-              variants={cardVariants}
-              className={`relative overflow-hidden rounded-2xl bg-surface/30 backdrop-blur-xl border border-text/10 p-6 flex flex-col justify-between hover:scale-[1.02] hover:shadow-2xl hover:shadow-accent/5 transition-all duration-500 group ${borderGlows[project.accent]}`}
-            >
-              {/* Mesh Accent Highlights */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${project.accentGradients} opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`} />
+          {/* Card 2: BlackBoxCV Project Card (Spans 1 column on desktop - Column 1 of Row 2) */}
+          <motion.div
+            variants={cardVariants}
+            className="lg:col-span-1 relative overflow-hidden rounded-3xl bg-surface/35 backdrop-blur-2xl border border-blue-500/20 hover:border-blue-500/40 p-6 sm:p-8 flex flex-col justify-between text-left hover:scale-[1.01] hover:shadow-2xl hover:shadow-blue-500/5 transition-all duration-500 group"
+          >
+            {/* Soft backdrop glow */}
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-cyan-500/5 to-transparent pointer-events-none" />
 
-              {/* Top Section */}
-              <div className="space-y-6 relative z-10 text-left">
-                {/* Meta details */}
-                <div className="flex items-center justify-between">
-                  <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-surface border border-text/10 text-muted">
-                    {project.category}
-                  </span>
-                  <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-surface border border-text/10 text-text">
-                    {getStatusIcon(project.statusType)}
-                    <span>{project.status}</span>
+            {/* Inner content wrapper - flex/grid */}
+            <div className="flex flex-col md:flex-row gap-6 h-full justify-between">
+              {/* Left Side: Header, Tagline, Problem/Solution/Impact */}
+              <div className="flex-1 flex flex-col justify-between space-y-4">
+                <div className="space-y-4">
+                  {/* Badges */}
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="px-2.5 py-0.5 rounded-full text-[9px] font-black tracking-wider bg-blue-500/10 border border-blue-500/20 text-blue-400 uppercase">
+                      AI / NLP
+                    </span>
+                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-surface border border-text/10 text-[9px] font-bold text-muted uppercase font-mono">
+                      <Activity className="w-3 h-3 text-blue-400 animate-pulse" />
+                      <span>Active Development</span>
+                    </span>
+                  </div>
+
+                  {/* Name & Tagline */}
+                  <div className="space-y-2">
+                    <h3 className="text-2xl font-black text-text tracking-tight group-hover:text-blue-400 transition-colors duration-300">
+                      BlackBoxCV
+                    </h3>
+                    <p className="text-muted text-xs font-semibold leading-relaxed">
+                      NLP resume screening and ATS optimization platform.
+                    </p>
                   </div>
                 </div>
 
-                {/* Title */}
-                <h3 className="text-xl sm:text-2xl font-black text-text tracking-tight group-hover:text-accent transition-colors duration-300">
-                  {project.name}
-                </h3>
-
-                {/* Problem, Solution, Impact Blocks */}
-                <div className="space-y-4 pt-2 border-t border-text/5">
+                {/* Problem, Solution, Impact Stack */}
+                <div className="space-y-2.5 pt-4 border-t border-text/5">
                   {/* Problem */}
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-1.5 text-xs font-semibold text-muted uppercase tracking-wider">
-                      <HelpCircle className="w-3.5 h-3.5 text-red-400" />
+                  <div className="bg-red-500/5 border border-red-500/10 p-2.5 rounded-xl space-y-1">
+                    <div className="flex items-center gap-1 px-1.5 text-[8px] font-bold text-red-400 uppercase tracking-widest">
+                      <HelpCircle className="w-3 h-3 text-red-400" />
                       <span>Problem</span>
                     </div>
-                    <p className="text-muted text-sm leading-relaxed pl-5">
-                      {project.problem}
+                    <p className="text-muted text-[10px] leading-relaxed pl-1.5">
+                      Recruiter and ATS evaluation logics are opaque to job-seeking students.
                     </p>
                   </div>
 
                   {/* Solution */}
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-1.5 text-xs font-semibold text-muted uppercase tracking-wider">
-                      <ToggleLeft className="w-3.5 h-3.5 text-accent" />
+                  <div className="bg-blue-500/5 border border-blue-500/10 p-2.5 rounded-xl space-y-1">
+                    <div className="flex items-center gap-1 px-1.5 text-[8px] font-bold text-blue-400 uppercase tracking-widest">
+                      <ToggleLeft className="w-3 h-3 text-blue-400" />
                       <span>Solution</span>
                     </div>
-                    <p className="text-text text-sm leading-relaxed pl-5">
-                      {project.solution}
+                    <p className="text-text/90 text-[10px] leading-relaxed pl-1.5">
+                      Built an analyzer using semantic similarity and recruiter evaluation rules.
                     </p>
                   </div>
 
                   {/* Impact */}
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-1.5 text-xs font-semibold text-muted uppercase tracking-wider">
-                      <Award className="w-3.5 h-3.5 text-emerald-400" />
+                  <div className="bg-emerald-500/5 border border-emerald-500/10 p-2.5 rounded-xl space-y-1">
+                    <div className="flex items-center gap-1 px-1.5 text-[8px] font-bold text-emerald-400 uppercase tracking-widest">
+                      <Award className="w-3 h-3 text-emerald-400" />
                       <span>Impact</span>
                     </div>
-                    <p className="text-text/90 text-sm leading-relaxed font-semibold pl-5">
-                      {project.impact}
+                    <p className="text-text/90 text-[10px] leading-relaxed font-semibold pl-1.5">
+                      Provides resume feedback and optimizes semantic match scores.
                     </p>
                   </div>
                 </div>
               </div>
 
-              {/* Bottom Section: Tech Stack & Actions */}
-              <div className="space-y-6 pt-6 mt-6 border-t border-text/5 relative z-10 text-left">
-                {/* Tech Chips */}
-                <div className="flex flex-wrap gap-1.5">
-                  {project.techStack.map((tech, idx) => (
-                    <span 
-                      key={idx} 
-                      className="px-2 py-0.5 rounded bg-surface text-[10px] sm:text-xs font-mono text-muted border border-text/5 hover:border-accent/10 transition-colors duration-300"
-                    >
-                      {tech}
-                    </span>
-                  ))}
+              {/* Right Side: Capabilities, Tech Stack, Actions */}
+              <div className="flex-1 flex flex-col justify-between space-y-4 md:border-l md:border-text/5 md:pl-6">
+                {/* 2x2 Capabilities Grid */}
+                <div className="space-y-2">
+                  <h4 className="text-[9px] font-mono font-bold tracking-widest text-blue-400 uppercase">
+                    Capabilities
+                  </h4>
+                  <div className="grid grid-cols-2 gap-1.5">
+                    <div className="p-2 rounded-lg bg-surface/50 border border-text/5 flex items-center gap-1.5 hover:border-blue-500/20 transition-colors">
+                      <FileText className="w-3.5 h-3.5 text-blue-400 shrink-0" />
+                      <span className="text-[9px] text-muted font-medium leading-tight">Resume Analysis</span>
+                    </div>
+                    <div className="p-2 rounded-lg bg-surface/50 border border-text/5 flex items-center gap-1.5 hover:border-blue-500/20 transition-colors">
+                      <Cpu className="w-3.5 h-3.5 text-purple-400 shrink-0" />
+                      <span className="text-[9px] text-muted font-medium leading-tight">ATS Simulation</span>
+                    </div>
+                    <div className="p-2 rounded-lg bg-surface/50 border border-text/5 flex items-center gap-1.5 hover:border-blue-500/20 transition-colors">
+                      <Terminal className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+                      <span className="text-[9px] text-muted font-medium leading-tight">Semantic Match</span>
+                    </div>
+                    <div className="p-2 rounded-lg bg-surface/50 border border-text/5 flex items-center gap-1.5 hover:border-blue-500/20 transition-colors">
+                      <Sparkles className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                      <span className="text-[9px] text-muted font-medium leading-tight">Report Gen</span>
+                    </div>
+                  </div>
                 </div>
 
-                {/* Action Buttons */}
-                <div className="flex items-center gap-3 w-full">
+                {/* Tech Stack */}
+                <div className="space-y-2">
+                  <h4 className="text-[9px] font-mono font-bold tracking-widest text-blue-400 uppercase">
+                    Tech Stack
+                  </h4>
+                  <div className="flex flex-wrap gap-1">
+                    {["Python", "Streamlit", "Sentence Transformers", "NLP", "Scikit-Learn"].map((t) => (
+                      <span
+                        key={t}
+                        className="px-1.5 py-0.5 rounded bg-surface/60 border border-text/5 text-[8px] font-semibold text-text hover:border-blue-500/30 transition-colors"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Actions */}
+                <div className="flex flex-col gap-1.5 pt-2 border-t border-text/5">
                   <a
-                    href={project.github}
+                    href="https://github.com/AnujMishra301/BlackBoxCV"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-surface/50 border border-text/10 text-xs font-bold transition-all duration-300 hover:bg-surface hover:border-text/20 hover:scale-[1.02]"
+                    className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-surface/50 border border-text/10 text-[10px] font-bold text-text transition-all hover:bg-surface hover:border-text/20 hover:scale-[1.01]"
                   >
-                    <svg className="w-3.5 h-3.5 text-text fill-current" viewBox="0 0 24 24">
+                    <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
                       <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
                     </svg>
-                    <span>GitHub</span>
+                    <span>Repository</span>
                   </a>
-
                   <a
-                    href={project.external}
-                    target={project.external.startsWith('http') ? '_blank' : undefined}
-                    rel={project.external.startsWith('http') ? 'noopener noreferrer' : undefined}
-                    className="flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-surface/50 border border-text/10 text-xs font-bold transition-all duration-300 hover:bg-surface hover:border-text/20 hover:scale-[1.02] opacity-60 hover:opacity-100"
+                    href="https://github.com/AnujMishra301/BlackBoxCV"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-surface/30 border border-text/10 text-[10px] font-bold text-muted transition-all hover:bg-surface/50 opacity-75"
                   >
-                    <ExternalLink className="w-3.5 h-3.5" />
-                    <span>{project.name === "Personal Portfolio Website" ? "Live Website" : "Demo"}</span>
+                    <ExternalLink className="w-3.5 h-3.5 text-blue-400" />
+                    <span>Live Demo</span>
                   </a>
                 </div>
               </div>
+            </div>
+          </motion.div>
 
-              {/* Bottom hover highlight line decoration */}
-              <div className="w-full h-1 bg-gradient-to-r from-accent/0 via-accent/30 to-purple-400/0 absolute bottom-0 left-0 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-center" />
-            </motion.div>
-          ))}
+          {/* Card 3: Real-Time Low Voltage Line Fault Detection System (Spans 1 column on desktop - Column 2 of Row 2) */}
+          <motion.div
+            variants={cardVariants}
+            className="lg:col-span-1 relative overflow-hidden rounded-3xl bg-surface/35 backdrop-blur-2xl border border-emerald-500/20 hover:border-emerald-500/40 p-6 sm:p-8 flex flex-col justify-between text-left hover:scale-[1.01] hover:shadow-2xl hover:shadow-emerald-500/5 transition-all duration-500 group"
+          >
+            {/* Soft backdrop glow */}
+            <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-green-500/5 to-transparent pointer-events-none" />
+
+            {/* Inner content wrapper - flex/grid */}
+            <div className="flex flex-col md:flex-row gap-6 h-full justify-between">
+              {/* Left Side: Header, Tagline, Problem/Solution/Impact */}
+              <div className="flex-1 flex flex-col justify-between space-y-4">
+                <div className="space-y-4">
+                  {/* Badges */}
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="px-2.5 py-0.5 rounded-full text-[9px] font-black tracking-wider bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 uppercase">
+                      IoT / Embedded Systems
+                    </span>
+                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-surface border border-text/10 text-[9px] font-bold text-muted uppercase font-mono">
+                      <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+                      <span>Completed</span>
+                    </span>
+                  </div>
+
+                  {/* Name & Tagline */}
+                  <div className="space-y-2">
+                    <h3 className="text-2xl font-black text-text tracking-tight group-hover:text-emerald-400 transition-colors duration-300">
+                      Fault Detection System
+                    </h3>
+                    <p className="text-muted text-xs font-semibold leading-relaxed">
+                      Real-time low voltage power line fault detection and reporting.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Problem, Solution, Impact Stack */}
+                <div className="space-y-2.5 pt-4 border-t border-text/5">
+                  {/* Problem */}
+                  <div className="bg-red-500/5 border border-red-500/10 p-2.5 rounded-xl space-y-1">
+                    <div className="flex items-center gap-1 px-1.5 text-[8px] font-bold text-red-400 uppercase tracking-widest">
+                      <HelpCircle className="w-3 h-3 text-red-400" />
+                      <span>Problem</span>
+                    </div>
+                    <p className="text-muted text-[10px] leading-relaxed pl-1.5">
+                      Manual detection of line faults is dangerous, slow, and highly inefficient.
+                    </p>
+                  </div>
+
+                  {/* Solution */}
+                  <div className="bg-blue-500/5 border border-blue-500/10 p-2.5 rounded-xl space-y-1">
+                    <div className="flex items-center gap-1 px-1.5 text-[8px] font-bold text-blue-400 uppercase tracking-widest">
+                      <ToggleLeft className="w-3 h-3 text-blue-400" />
+                      <span>Solution</span>
+                    </div>
+                    <p className="text-text/90 text-[10px] leading-relaxed pl-1.5">
+                      Engineered a NodeMCU IoT system that identifies and reports faults dynamically.
+                    </p>
+                  </div>
+
+                  {/* Impact */}
+                  <div className="bg-emerald-500/5 border border-emerald-500/10 p-2.5 rounded-xl space-y-1">
+                    <div className="flex items-center gap-1 px-1.5 text-[8px] font-bold text-emerald-400 uppercase tracking-widest">
+                      <Award className="w-3 h-3 text-emerald-400" />
+                      <span>Impact</span>
+                    </div>
+                    <p className="text-text/90 text-[10px] leading-relaxed font-semibold pl-1.5">
+                      Reduced response and repair dispatch time from hours to under five seconds.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Side: Capabilities, Tech Stack, Actions */}
+              <div className="flex-1 flex flex-col justify-between space-y-4 md:border-l md:border-text/5 md:pl-6">
+                {/* 2x2 Capabilities Grid */}
+                <div className="space-y-2">
+                  <h4 className="text-[9px] font-mono font-bold tracking-widest text-emerald-400 uppercase">
+                    Capabilities
+                  </h4>
+                  <div className="grid grid-cols-2 gap-1.5">
+                    <div className="p-2 rounded-lg bg-surface/50 border border-text/5 flex items-center gap-1.5 hover:border-emerald-500/20 transition-colors">
+                      <Activity className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                      <span className="text-[9px] text-muted font-medium leading-tight">Real-Time Alert</span>
+                    </div>
+                    <div className="p-2 rounded-lg bg-surface/50 border border-text/5 flex items-center gap-1.5 hover:border-emerald-500/20 transition-colors">
+                      <Cpu className="w-3.5 h-3.5 text-purple-400 shrink-0" />
+                      <span className="text-[9px] text-muted font-medium leading-tight">Edge Detection</span>
+                    </div>
+                    <div className="p-2 rounded-lg bg-surface/50 border border-text/5 flex items-center gap-1.5 hover:border-emerald-500/20 transition-colors">
+                      <Terminal className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+                      <span className="text-[9px] text-muted font-medium leading-tight">Web Dashboard</span>
+                    </div>
+                    <div className="p-2 rounded-lg bg-surface/50 border border-text/5 flex items-center gap-1.5 hover:border-emerald-500/20 transition-colors">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-blue-400 shrink-0" />
+                      <span className="text-[9px] text-muted font-medium leading-tight">Auto Logging</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Tech Stack */}
+                <div className="space-y-2">
+                  <h4 className="text-[9px] font-mono font-bold tracking-widest text-emerald-400 uppercase">
+                    Tech Stack
+                  </h4>
+                  <div className="flex flex-wrap gap-1">
+                    {["C++", "NodeMCU", "HTML", "CSS", "JavaScript"].map((t) => (
+                      <span
+                        key={t}
+                        className="px-1.5 py-0.5 rounded bg-surface/60 border border-text/5 text-[8px] font-semibold text-text hover:border-emerald-500/30 transition-colors"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Actions */}
+                <div className="flex flex-col gap-1.5 pt-2 border-t border-text/5">
+                  <a
+                    href="https://github.com/AnujMishra301/Fault-Detection-System-Low-Voltage"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-surface/50 border border-text/10 text-[10px] font-bold text-text transition-all hover:bg-surface hover:border-text/20 hover:scale-[1.01]"
+                  >
+                    <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                      <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                    <span>Repository</span>
+                  </a>
+                  <a
+                    href="https://github.com/AnujMishra301/Fault-Detection-System-Low-Voltage"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-surface/30 border border-text/10 text-[10px] font-bold text-muted transition-all hover:bg-surface/50 opacity-75"
+                  >
+                    <ExternalLink className="w-3.5 h-3.5 text-emerald-400" />
+                    <span>Live Demo</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </motion.div>
 
           {/* Card 4: Personal Portfolio Website Card (Spans 2 columns on desktop - Columns 2 & 3 of Row 2) */}
           <motion.div
