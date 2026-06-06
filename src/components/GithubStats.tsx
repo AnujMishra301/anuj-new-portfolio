@@ -1,24 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Github } from './Icons'
-import { Sparkles, Terminal } from 'lucide-react'
+import { Sparkles, Terminal, Code2 } from 'lucide-react'
 import { github } from '../data/socialLinks'
-
-const StatsSkeleton = () => (
-  <div className="w-full h-full p-6 flex flex-col justify-between space-y-3 animate-pulse bg-[#0b1329]/40">
-    <div className="space-y-3">
-      {[...Array(4)].map((_, i) => (
-        <div key={i} className="flex items-center justify-between border-b border-text/5 pb-2">
-          <div className="flex items-center gap-2">
-            <div className="w-3.5 h-3.5 rounded bg-text/10" />
-            <div className="h-3 w-24 bg-text/10 rounded" />
-          </div>
-          <div className="h-3 w-12 bg-text/20 rounded" />
-        </div>
-      ))}
-    </div>
-  </div>
-)
 
 const StreakSkeleton = () => (
   <div className="w-full h-full p-6 flex items-center justify-around space-x-4 animate-pulse bg-[#0b1329]/40">
@@ -32,30 +16,24 @@ const StreakSkeleton = () => (
   </div>
 )
 
-const LanguagesSkeleton = () => (
-  <div className="w-full h-full p-6 flex flex-col justify-center space-y-3.5 animate-pulse bg-[#0b1329]/40">
-    {[...Array(3)].map((_, i) => (
-      <div key={i} className="space-y-2">
-        <div className="flex justify-between items-center">
-          <div className="h-3 w-16 bg-text/25 rounded" />
-          <div className="h-2.5 w-8 bg-text/10 rounded" />
-        </div>
-        <div className="h-2.5 w-full bg-text/10 rounded-full overflow-hidden">
-          <div className="h-full bg-text/20 rounded-full" style={{ width: i === 0 ? '70%' : i === 1 ? '45%' : '25%' }} />
-        </div>
-      </div>
-    ))}
-  </div>
-)
-
 export default function GithubStats() {
-  const [statsLoaded, setStatsLoaded] = useState(false)
   const [streakLoaded, setStreakLoaded] = useState(false)
-  const [langsLoaded, setLangsLoaded] = useState(false)
+  const [streakError, setStreakError] = useState(false)
 
-  const statsUrl = "https://github-readme-stats.vercel.app/api?username=AnujMishra301&show_icons=true&theme=transparent"
-  const languagesUrl = "https://github-readme-stats.vercel.app/api/top-langs/?username=AnujMishra301&layout=compact&theme=transparent"
   const streakUrl = "https://streak-stats.demolab.com?user=AnujMishra301&theme=transparent"
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!streakLoaded) {
+        setStreakError(true)
+      }
+    }, 5000)
+    return () => clearTimeout(timer)
+  }, [streakLoaded])
+
+  if (streakError) {
+    return null
+  }
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -109,7 +87,7 @@ export default function GithubStats() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-muted text-base md:text-lg leading-relaxed"
           >
-            Real-time profile statistics linked directly to my open-source profile.
+            Core technologies and development stream linked directly to my open-source profile.
           </motion.p>
         </div>
 
@@ -122,49 +100,10 @@ export default function GithubStats() {
           className="grid grid-cols-1 lg:grid-cols-2 gap-8"
         >
           
-          {/* Box 1: Profile Stats Card */}
+          {/* Card 1: Commits Streak Stats */}
           <motion.div 
             variants={itemVariants}
-            className="relative overflow-hidden rounded-2xl bg-surface/30 backdrop-blur-xl border border-text/10 p-6 flex flex-col hover:border-accent/20 transition-all duration-300 group"
-          >
-            <div className="flex items-center justify-between border-b border-text/5 pb-4 mb-6">
-              <div className="flex items-center gap-3 text-left">
-                <div className="w-9 h-9 rounded-lg bg-surface border border-text/10 flex items-center justify-center group-hover:border-accent/20 transition-colors duration-300">
-                  <Github className="w-5 h-5 text-text" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-text group-hover:text-accent transition-colors duration-300">
-                    Profile Stats
-                  </h3>
-                  <p className="text-[10px] text-muted font-mono tracking-wider uppercase">
-                    AnujMishra301
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Content & Loader Container */}
-            <div className="relative w-full aspect-[480/195] bg-[#0b1329]/20 rounded-xl border border-text/5 overflow-hidden">
-              <img 
-                src={statsUrl} 
-                alt="GitHub Profile Stats" 
-                className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-500 z-20 ${statsLoaded ? 'opacity-100' : 'opacity-0'}`}
-                onLoad={() => setStatsLoaded(true)}
-              />
-
-              {/* Show Loading Skeleton */}
-              {!statsLoaded && (
-                <div className="absolute inset-0 w-full h-full bg-surface/10 z-10">
-                  <StatsSkeleton />
-                </div>
-              )}
-            </div>
-          </motion.div>
-
-          {/* Box 2: Commits Streak Stats */}
-          <motion.div 
-            variants={itemVariants}
-            className="relative overflow-hidden rounded-2xl bg-surface/30 backdrop-blur-xl border border-text/10 p-6 flex flex-col hover:border-accent/20 transition-all duration-300 group"
+            className="relative overflow-hidden rounded-2xl bg-surface/30 backdrop-blur-xl border border-text/10 p-6 flex flex-col hover:border-accent/20 transition-all duration-300 group lg:col-span-1 w-full"
           >
             <div className="flex items-center justify-between border-b border-text/5 pb-4 mb-6">
               <div className="flex items-center gap-3 text-left">
@@ -183,12 +122,13 @@ export default function GithubStats() {
             </div>
 
             {/* Content & Loader Container */}
-            <div className="relative w-full aspect-[480/195] bg-[#0b1329]/20 rounded-xl border border-text/5 overflow-hidden">
+            <div className="relative w-full aspect-[480/195] bg-[#0b1329]/20 rounded-xl border border-text/5 overflow-hidden flex items-center justify-center">
               <img 
                 src={streakUrl} 
                 alt="GitHub Commit Streak" 
                 className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-500 z-20 ${streakLoaded ? 'opacity-100' : 'opacity-0'}`}
                 onLoad={() => setStreakLoaded(true)}
+                onError={() => setStreakError(true)}
               />
 
               {/* Show Loading Skeleton */}
@@ -200,42 +140,45 @@ export default function GithubStats() {
             </div>
           </motion.div>
 
-          {/* Box 3: Top Languages Card (Spans full width on Desktop) */}
+          {/* Card 2: Core Technologies Card */}
           <motion.div 
             variants={itemVariants}
-            className="relative overflow-hidden rounded-2xl bg-surface/30 backdrop-blur-xl border border-text/10 p-6 flex flex-col hover:border-accent/20 transition-all duration-300 group lg:col-span-2 max-w-3xl mx-auto w-full"
+            className="relative overflow-hidden rounded-2xl bg-surface/30 backdrop-blur-xl border border-text/10 p-6 flex flex-col hover:border-accent/20 transition-all duration-300 group lg:col-span-1 w-full"
           >
             <div className="flex items-center justify-between border-b border-text/5 pb-4 mb-6">
               <div className="flex items-center gap-3 text-left">
                 <div className="w-9 h-9 rounded-lg bg-surface border border-text/10 flex items-center justify-center group-hover:border-accent/20 transition-colors duration-300">
-                  <Github className="w-5 h-5 text-text" />
+                  <Code2 className="w-5 h-5 text-accent" />
                 </div>
                 <div>
                   <h3 className="font-bold text-text group-hover:text-accent transition-colors duration-300">
-                    Top Languages
+                    Core Technologies
                   </h3>
                   <p className="text-[10px] text-muted font-mono tracking-wider uppercase">
-                    Language Distribution
+                    Primary Stack & Frameworks
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* Content & Loader Container */}
-            <div className="relative w-full aspect-[480/120] sm:aspect-[480/100] md:aspect-[480/80] bg-[#0b1329]/20 rounded-xl border border-text/5 overflow-hidden">
-              <img 
-                src={languagesUrl} 
-                alt="GitHub Top Languages" 
-                className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-500 z-20 ${langsLoaded ? 'opacity-100' : 'opacity-0'}`}
-                onLoad={() => setLangsLoaded(true)}
-              />
-
-              {/* Show Loading Skeleton */}
-              {!langsLoaded && (
-                <div className="absolute inset-0 w-full h-full bg-surface/10 z-10">
-                  <LanguagesSkeleton />
-                </div>
-              )}
+            {/* Badges Container */}
+            <div className="flex flex-wrap gap-2.5 justify-center py-4 my-auto">
+              {[
+                { name: "Java", color: "from-red-500/10 to-orange-500/5", border: "border-red-500/20 hover:border-red-500/40", text: "text-red-400" },
+                { name: "Python", color: "from-blue-500/10 to-cyan-500/5", border: "border-blue-500/20 hover:border-blue-500/40", text: "text-blue-400" },
+                { name: "JavaScript", color: "from-yellow-500/10 to-amber-500/5", border: "border-yellow-500/20 hover:border-yellow-500/40", text: "text-yellow-400" },
+                { name: "TypeScript", color: "from-blue-600/10 to-indigo-500/5", border: "border-blue-600/20 hover:border-blue-600/40", text: "text-blue-400" },
+                { name: "React", color: "from-cyan-500/10 to-blue-500/5", border: "border-cyan-500/20 hover:border-cyan-500/40", text: "text-cyan-400" },
+                { name: "Node.js", color: "from-green-500/10 to-emerald-500/5", border: "border-green-500/20 hover:border-green-500/40", text: "text-green-400" },
+                { name: "MySQL", color: "from-orange-500/10 to-yellow-500/5", border: "border-orange-500/20 hover:border-orange-500/40", text: "text-orange-400" }
+              ].map((tech) => (
+                <span 
+                  key={tech.name}
+                  className={`px-3.5 py-1.5 rounded-xl bg-gradient-to-br ${tech.color} border ${tech.border} ${tech.text} text-xs font-semibold tracking-wide hover:scale-105 hover:shadow-lg transition-all duration-300 cursor-default`}
+                >
+                  {tech.name}
+                </span>
+              ))}
             </div>
           </motion.div>
 
