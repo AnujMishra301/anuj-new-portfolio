@@ -1,5 +1,6 @@
-import { motion } from 'framer-motion'
-import { GraduationCap, Code2, Terminal, Rocket, Check } from 'lucide-react'
+import { useRef } from 'react'
+import { motion, useScroll, useTransform } from 'framer-motion'
+import { GraduationCap, Code2, Terminal, Rocket, CheckCircle2 } from 'lucide-react'
 
 interface TimelineEntry {
   year: string
@@ -12,58 +13,69 @@ interface TimelineEntry {
 }
 
 export default function Timeline() {
+  const containerRef = useRef<HTMLDivElement>(null)
+  
+  // Set up scroll progress tracking for the cinematic drawing timeline line
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  })
+
+  // Transform the scaleY of the drawing path
+  const scaleY = useTransform(scrollYProgress, [0.05, 0.85], [0, 1])
+
   const entries: TimelineEntry[] = [
     {
       year: "2024",
-      title: "Academic Inception",
-      subtitle: "B.Tech in Computer Science Engineering",
+      title: "Started B.Tech CSE",
+      subtitle: "Computer Science & Systems Inception",
       icon: <GraduationCap className="w-5 h-5 text-blue-400" />,
       bullets: [
-        "Started B.Tech in Computer Science Engineering",
+        "Started B.Tech in Computer Science Engineering (CSE)",
         "Initiated exploration of system programming and basic computing theory",
-        "Engaged in core campus engineering community groups",
+        "Engaged in campus dev circles and student developer chapters",
       ],
       accent: "blue",
-      accentClass: "hover:border-blue-500/30 hover:shadow-blue-500/5",
+      accentClass: "hover:border-blue-500/30 hover:shadow-blue-500/5 hover:shadow-lg",
     },
     {
       year: "2025",
-      title: "Algorithmic Foundation",
-      subtitle: "Data Structures & Problem Solving",
+      title: "Focused on Java and DSA",
+      subtitle: "Deep Algorithmic Foundations",
       icon: <Code2 className="w-5 h-5 text-emerald-400" />,
       bullets: [
-        "Focused heavily on Java and Data Structures & Algorithms (DSA)",
-        "Built strong problem-solving foundations through constant practice",
-        "Competed in university-level algorithmic programming challenges",
+        "Focused heavily on Java programming and deep object-oriented principles",
+        "Mastered core Data Structures & Algorithms (DSA)",
+        "Built robust algorithmic foundations through constant competitive problem-solving",
       ],
       accent: "green",
-      accentClass: "hover:border-emerald-500/30 hover:shadow-emerald-500/5",
+      accentClass: "hover:border-emerald-500/30 hover:shadow-emerald-500/5 hover:shadow-lg",
     },
     {
       year: "2026",
-      title: "Practical Systems & AI",
-      subtitle: "Full-Stack Project Development",
+      title: "Built BlackBoxCV & Sentinel AI",
+      subtitle: "Practical Systems & Backend Focus",
       icon: <Terminal className="w-5 h-5 text-purple-400" />,
       bullets: [
         "Built BlackBoxCV (AI/NLP-powered resume screen analyzer)",
-        "Worked on collaborative git-based software team projects",
-        "Started Backend Development (Low-level design and performance)",
+        "Built Sentinel AI (flagship code authenticity machine learning platform)",
+        "Started Backend Development using high-throughput Node.js & Express architectures",
       ],
       accent: "purple",
-      accentClass: "hover:border-purple-500/30 hover:shadow-purple-500/5",
+      accentClass: "hover:border-purple-500/30 hover:shadow-purple-500/5 hover:shadow-lg",
     },
     {
       year: "Future",
-      title: "Aspirations & Scale",
-      subtitle: "Open Source & Systems Engineering",
+      title: "Open Source & Scaled Systems",
+      subtitle: "GSoC Engagement & AI Applications",
       icon: <Rocket className="w-5 h-5 text-amber-400" />,
       bullets: [
-        "Google Summer of Code (GSoC) engagement",
-        "Active Open Source contributions to backend systems",
-        "Deep diving into high-throughput backend services and AI applications",
+        "Contribute to complex Open Source systems and backend servers",
+        "Target Google Summer of Code (GSoC) projects",
+        "Engineer high-performance backend systems and production-grade AI applications",
       ],
       accent: "yellow",
-      accentClass: "hover:border-amber-500/30 hover:shadow-amber-500/5",
+      accentClass: "hover:border-amber-500/30 hover:shadow-amber-500/5 hover:shadow-lg",
     },
   ]
 
@@ -75,8 +87,22 @@ export default function Timeline() {
     },
   }
 
+  const borderGlows = {
+    blue: "group-hover:border-blue-500/30",
+    green: "group-hover:border-emerald-500/30",
+    purple: "group-hover:border-purple-500/30",
+    yellow: "group-hover:border-amber-500/30",
+  }
+
+  const lineGlows = {
+    blue: "bg-blue-400 shadow-[0_0_15px_rgba(96,165,250,0.5)]",
+    green: "bg-emerald-400 shadow-[0_0_15px_rgba(52,211,153,0.5)]",
+    purple: "bg-purple-400 shadow-[0_0_15px_rgba(192,132,252,0.5)]",
+    yellow: "bg-amber-400 shadow-[0_0_15px_rgba(251,191,36,0.5)]",
+  }
+
   return (
-    <section id="timeline" className="relative bg-background py-24 sm:py-32 px-4 sm:px-6 md:px-12 overflow-hidden border-t border-text/5">
+    <section id="timeline" ref={containerRef} className="relative bg-background py-24 sm:py-32 px-4 sm:px-6 md:px-12 overflow-hidden border-t border-text/5">
       {/* Background radial glow */}
       <div className="absolute top-[40%] left-[10%] w-[500px] h-[500px] bg-accent/5 rounded-full blur-[120px] pointer-events-none" />
 
@@ -109,15 +135,21 @@ export default function Timeline() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-muted text-base md:text-lg leading-relaxed"
           >
-            A timeline of growth through software engineering and continuous learning.
+            A vertical journey of growth through software engineering, backend systems, and continuous learning.
           </motion.p>
         </div>
 
         {/* Timeline Path container */}
         <div className="relative">
           
-          {/* Vertical central timeline line */}
-          <div className="absolute left-4 md:left-1/2 -translate-x-[1px] top-4 bottom-4 w-[2px] bg-gradient-to-b from-accent via-purple-500 to-transparent opacity-30" />
+          {/* Static gray timeline backing line */}
+          <div className="absolute left-4 md:left-1/2 -translate-x-[1px] top-4 bottom-4 w-[2px] bg-text/10" />
+
+          {/* Animated active/colored timeline drawing line */}
+          <motion.div 
+            style={{ scaleY, originY: 0 }}
+            className="absolute left-4 md:left-1/2 -translate-x-[1px] top-4 bottom-4 w-[2px] bg-gradient-to-b from-accent via-purple-500 to-transparent" 
+          />
 
           {/* Staggered Timeline entries */}
           <motion.div 
@@ -137,27 +169,33 @@ export default function Timeline() {
                 >
                   {/* Glowing Node on the line */}
                   <div className="absolute left-4 md:left-1/2 -translate-x-1/2 top-6 z-20">
-                    <div className="relative flex items-center justify-center">
-                      <div className="w-3.5 h-3.5 rounded-full border border-background bg-text transition-transform duration-300 relative z-10 flex items-center justify-center">
-                        <div className="w-1.5 h-1.5 rounded-full bg-accent" />
-                      </div>
-                      {/* Pulse Ring for active/future items */}
-                      <div className="absolute w-8 h-8 rounded-full bg-accent/15 border border-accent/20 animate-ping opacity-75" />
-                    </div>
+                    <motion.div 
+                      initial={{ scale: 0.5, opacity: 0 }}
+                      whileInView={{ scale: 1, opacity: 1 }}
+                      viewport={{ once: true, margin: "-100px" }}
+                      transition={{ duration: 0.5, delay: idx * 0.1 }}
+                      className="relative flex items-center justify-center"
+                    >
+                      {/* Interactive indicator circle */}
+                      <div className={`w-4 h-4 rounded-full border-2 border-background transition-all duration-300 ${lineGlows[entry.accent]}`} />
+                      
+                      {/* Ping animation overlay */}
+                      <div className="absolute w-8 h-8 rounded-full bg-accent/10 border border-accent/20 animate-ping opacity-30 pointer-events-none" />
+                    </motion.div>
                   </div>
 
                   {/* Card Section */}
                   <div className="w-full md:w-[46%] pl-12 md:pl-0">
                     <motion.div
                       variants={{
-                        hidden: { opacity: 0, x: isEven ? 40 : -40 },
+                        hidden: { opacity: 0, x: isEven ? 45 : -45 },
                         visible: { 
                           opacity: 1, 
                           x: 0,
                           transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
                         }
                       }}
-                      className={`group relative rounded-2xl bg-surface/30 backdrop-blur-xl border border-text/10 p-6 sm:p-8 hover:scale-[1.02] transition-all duration-300 ${entry.accentClass}`}
+                      className={`group relative rounded-2xl bg-surface/30 backdrop-blur-xl border border-text/10 p-6 sm:p-8 hover:scale-[1.02] transition-all duration-500 hover:shadow-2xl hover:shadow-accent/5 ${entry.accentClass} ${borderGlows[entry.accent]}`}
                     >
                       {/* Interactive mesh highlight */}
                       <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
@@ -187,7 +225,7 @@ export default function Timeline() {
                         <ul className="space-y-3 text-left">
                           {entry.bullets.map((bullet, bulletIdx) => (
                             <li key={bulletIdx} className="flex items-start gap-2.5 text-sm leading-relaxed text-muted group-hover:text-text/90 transition-colors duration-300">
-                              <Check className="w-4 h-4 text-accent mt-0.5 shrink-0" />
+                              <CheckCircle2 className="w-4 h-4 text-accent mt-0.5 shrink-0" />
                               <span>{bullet}</span>
                             </li>
                           ))}
