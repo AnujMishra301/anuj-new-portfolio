@@ -1,113 +1,139 @@
-import { useRef } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
-import { GraduationCap, Code2, Terminal, Rocket, CheckCircle2 } from 'lucide-react'
+import React, { useRef, useState, useEffect } from 'react'
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion'
+import { GraduationCap, Terminal, Cpu, Sparkles, Compass, Ship, Anchor, ArrowUpRight } from 'lucide-react'
 
 interface TimelineEntry {
   year: string
   title: string
   subtitle: string
   icon: React.ReactNode
-  bullets: string[]
-  accent: 'blue' | 'purple' | 'green' | 'yellow'
+  description: string
+  technologies: string[]
+  accent: 'ocean' | 'brown' | 'red' | 'gold' | 'sky'
   accentClass: string
 }
 
 export default function Timeline() {
   const containerRef = useRef<HTMLDivElement>(null)
-  
-  // Set up scroll progress tracking for the cinematic drawing timeline line
+  const shouldReduceMotion = useReducedMotion()
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
+
+  useEffect(() => {
+    if (shouldReduceMotion) return
+
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePos({
+        x: (e.clientX - window.innerWidth / 2) / 60,
+        y: (e.clientY - window.innerHeight / 2) / 60,
+      })
+    }
+    window.addEventListener('mousemove', handleMouseMove)
+    return () => window.removeEventListener('mousemove', handleMouseMove)
+  }, [shouldReduceMotion])
+
+  // Scroll progress for route drawing & ship travel
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"]
   })
 
-  // Transform the scaleY of the drawing path
-  const scaleY = useTransform(scrollYProgress, [0.05, 0.85], [0, 1])
+  // Transform scale of active route line
+  const scaleY = useTransform(scrollYProgress, [0.08, 0.88], [0, 1])
   
-  // Transform the top position of the glowing scroll-riding orb
-  const orbTop = useTransform(scrollYProgress, [0.05, 0.85], ["0%", "100%"])
+  // Position of traveling ship along vertical route
+  const shipTop = useTransform(scrollYProgress, [0.08, 0.88], ["0%", "100%"])
 
   const entries: TimelineEntry[] = [
     {
       year: "2024",
-      title: "Started B.Tech CSE",
-      subtitle: "Computer Science & Systems Inception",
-      icon: <GraduationCap className="w-5 h-5 text-blue-400" />,
-      bullets: [
-        "Started B.Tech in Computer Science Engineering (CSE)",
-        "Initiated exploration of system programming and basic computing theory",
-        "Engaged in campus dev circles and student developer chapters",
-      ],
-      accent: "blue",
-      accentClass: "hover:border-blue-500/30 hover:shadow-blue-500/5 hover:shadow-lg",
+      title: "Beginning Computer Science",
+      subtitle: "Foundations & Analytical Architecture",
+      icon: <GraduationCap className="w-5 h-5" />,
+      description: "Initiated my academic CSE voyage. Focused heavily on memory management, compiler basics, functional syntax structures, and foundational object-oriented logic using Java.",
+      technologies: ["Java", "C", "Object-Oriented Design", "Computing Theory"],
+      accent: "ocean",
+      accentClass: "border-op-ocean text-op-ocean hover:shadow-[0_8px_25px_rgba(11,116,197,0.15)] bg-[#fffcf5]/90 hover:bg-white"
     },
     {
       year: "2025",
-      title: "Focused on Java and DSA",
-      subtitle: "Deep Algorithmic Foundations",
-      icon: <Code2 className="w-5 h-5 text-emerald-400" />,
-      bullets: [
-        "Focused heavily on Java programming and deep object-oriented principles",
-        "Mastered core Data Structures & Algorithms (DSA)",
-        "Built robust algorithmic foundations through constant competitive problem-solving",
-      ],
-      accent: "green",
-      accentClass: "hover:border-emerald-500/30 hover:shadow-emerald-500/5 hover:shadow-lg",
+      title: "Learning Backend Engineering",
+      subtitle: "RESTful Layers & Telemetry Systems",
+      icon: <Terminal className="w-5 h-5" />,
+      description: "Transitioned from algorithmic logic to high-performance production systems. Mastered database optimization (indexing, transactions) and concurrent routing using Spring Boot and gRPC.",
+      technologies: ["Spring Boot", "Go", "PostgreSQL", "gRPC", "Docker"],
+      accent: "brown",
+      accentClass: "border-op-brown text-op-brown hover:shadow-[0_8px_25px_rgba(198,134,66,0.15)] bg-[#fffcf5]/90 hover:bg-white"
+    },
+    {
+      year: "2025 - 2026",
+      title: "Building AI Applications",
+      subtitle: "NLP Parsing & Latency Optimization",
+      icon: <Cpu className="w-5 h-5" />,
+      description: "Integrated machine learning models directly into backend pipelines. Built BlackBoxCV and Sentinel AI, developing parsing pipelines for code structure analysis and semantic vector index search.",
+      technologies: ["Python", "Sentence Transformers", "Scikit-Learn", "Vector Databases"],
+      accent: "red",
+      accentClass: "border-op-red text-op-red hover:shadow-[0_8px_25px_rgba(215,38,56,0.15)] bg-[#fffcf5]/90 hover:bg-white"
     },
     {
       year: "2026",
-      title: "Built BlackBoxCV & Sentinel AI",
-      subtitle: "Practical Systems & Backend Focus",
-      icon: <Terminal className="w-5 h-5 text-purple-400" />,
-      bullets: [
-        "Built BlackBoxCV (AI/NLP resume screening analyzer)",
-        "Built Sentinel AI (flagship AI-powered code authenticity platform)",
-        "Started Backend Development using high-throughput Node.js & Express architectures",
-      ],
-      accent: "purple",
-      accentClass: "hover:border-purple-500/30 hover:shadow-purple-500/5 hover:shadow-lg",
+      title: "Thinking in Scalable Systems",
+      subtitle: "Distributed Message Brokers & Resilient Scaling",
+      icon: <Sparkles className="w-5 h-5" />,
+      description: "Pivoted toward high-availability infrastructure. Configured clustering telemetry brokers (MQTT, WebSockets), caching strategies, and system pipeline diagnostics to ensure seamless data broadcast.",
+      technologies: ["WebSockets", "MQTT", "Redis", "System Telemetry"],
+      accent: "sky",
+      accentClass: "border-op-sky text-op-sky hover:shadow-[0_8px_25px_rgba(142,214,255,0.15)] bg-[#fffcf5]/90 hover:bg-white"
     },
     {
-      year: "Future",
-      title: "Open Source & Backend Systems",
-      subtitle: "GSoC Engagement & AI Applications",
-      icon: <Rocket className="w-5 h-5 text-amber-400" />,
-      bullets: [
-        "Contribute to complex Open Source systems and backend servers",
-        "Target Google Summer of Code (GSoC) programs",
-        "Engineer high-performance backend systems and production-grade AI applications",
-      ],
-      accent: "yellow",
-      accentClass: "hover:border-amber-500/30 hover:shadow-amber-500/5 hover:shadow-lg",
+      year: "Vision",
+      title: "Discovering ElderSense",
+      subtitle: "The Voyage Destination",
+      icon: <Compass className="w-5 h-5 animate-pulse" />,
+      description: "Formulated the vision for ElderSense AI. Combines experience in low-power mesh networks, timeseries database scaling, and LLM classifiers to address critical elderly care tracking challenges.",
+      technologies: ["EdgeML", "Mesh Networking", "Timeseries DB", "Human-Centered Design"],
+      accent: "gold",
+      accentClass: "border-op-gold text-op-gold hover:shadow-[0_8px_25px_rgba(247,201,72,0.18)] bg-[#fffefb] shadow-[0_0_20px_rgba(247,201,72,0.1)] hover:bg-white"
     },
+    {
+      year: "Present",
+      title: "Current Expedition",
+      subtitle: "Active Engineering & Development Streams",
+      icon: <Ship className="w-5 h-5" />,
+      description: "Deep diving into Go microservices and low-latency API architecture. Practicing advanced DSA logic, PyTorch models for sentence embedding, GSoC open-source preparations, and world literature logs.",
+      technologies: ["Go Microservices", "Data Structures & Algos", "PyTorch ML", "Open Source Contributing"],
+      accent: "ocean",
+      accentClass: "border-op-ocean text-op-ocean hover:shadow-[0_8px_25px_rgba(11,116,197,0.15)] bg-[#fffcf5]/90 hover:bg-white"
+    }
   ]
 
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.2, delayChildren: 0.1 },
-    },
-  }
-
-  const borderGlows = {
-    blue: "group-hover:border-blue-500/30",
-    green: "group-hover:border-emerald-500/30",
-    purple: "group-hover:border-purple-500/30",
-    yellow: "group-hover:border-amber-500/30",
-  }
-
-  const lineGlows = {
-    blue: "bg-blue-400 shadow-[0_0_15px_rgba(96,165,250,0.5)]",
-    green: "bg-emerald-400 shadow-[0_0_15px_rgba(52,211,153,0.5)]",
-    purple: "bg-purple-400 shadow-[0_0_15px_rgba(192,132,252,0.5)]",
-    yellow: "bg-amber-400 shadow-[0_0_15px_rgba(251,191,36,0.5)]",
+      transition: { staggerChildren: 0.2, delayChildren: 0.1 }
+    }
   }
 
   return (
     <section id="timeline" ref={containerRef} className="relative bg-background py-24 sm:py-32 px-4 sm:px-6 md:px-12 overflow-hidden border-t border-text/5">
+      
       {/* Background radial glow */}
-      <div className="absolute top-[40%] left-[10%] w-[500px] h-[500px] bg-accent/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-[40%] left-[10%] w-[500px] h-[500px] bg-op-ocean/5 rounded-full blur-[120px] pointer-events-none" />
+
+      {/* Decorative Navigation Map Watermark (Parallax) */}
+      <motion.div
+        style={{
+          x: shouldReduceMotion ? 0 : mousePos.x * -0.4,
+          y: shouldReduceMotion ? 0 : mousePos.y * -0.4,
+        }}
+        className="absolute inset-0 pointer-events-none opacity-[0.06] md:opacity-[0.08] z-0 flex items-center justify-center"
+      >
+        <svg viewBox="0 0 1000 800" className="w-full h-full stroke-op-navy" fill="none" strokeWidth="1">
+          <circle cx="500" cy="400" r="300" strokeDasharray="3 3" />
+          <line x1="500" y1="0" x2="500" y2="800" />
+          <line x1="0" y1="400" x2="1000" y2="400" />
+        </svg>
+      </motion.div>
 
       <div className="max-w-5xl mx-auto space-y-20 relative z-10">
         
@@ -118,47 +144,57 @@ export default function Timeline() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface border border-text/10 text-xs font-semibold text-accent tracking-wider uppercase"
+            className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-surface/50 border border-op-gold/30 text-xs font-bold text-op-gold tracking-widest uppercase font-sans shadow-sm backdrop-blur-md"
           >
-            Milestones
+            Chronicle // Roadmap
           </motion.div>
+          
           <motion.h2 
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight"
+            className="text-3xl sm:text-4xl md:text-5xl font-black tracking-widest font-cinzel text-op-parchment uppercase"
           >
-            My <span className="bg-gradient-to-r from-accent via-indigo-400 to-purple-400 bg-clip-text text-transparent">Journey</span>
+            Voyage <span className="bg-gradient-to-b from-op-parchment via-op-gold to-op-brown bg-clip-text text-transparent filter drop-shadow-md">Timeline</span>
           </motion.h2>
+          
           <motion.p 
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-muted text-base md:text-lg leading-relaxed"
+            className="text-muted text-base md:text-lg leading-relaxed font-sans"
           >
-            A vertical journey of growth through software engineering, backend systems, and continuous learning.
+            A chronological records map of my growth as an engineer, plotting the milestones that led to my flagship focus.
           </motion.p>
+
+          <div className="flex items-center justify-center gap-4 py-1">
+            <div className="w-16 h-[1.5px] bg-gradient-to-r from-transparent to-op-brown/30" />
+            <Anchor className="w-4 h-4 text-op-brown/50" />
+            <div className="w-16 h-[1.5px] bg-gradient-to-l from-transparent to-op-brown/30" />
+          </div>
         </div>
 
         {/* Timeline Path container */}
         <div className="relative">
           
-          {/* Static gray timeline backing line */}
-          <div className="absolute left-4 md:left-1/2 -translate-x-[1px] top-4 bottom-4 w-[2px] bg-text/10" />
+          {/* Static ocean route backing line */}
+          <div className="absolute left-4 md:left-1/2 -translate-x-[1px] top-4 bottom-4 w-[2px] bg-dashed bg-op-gold/25" />
 
-          {/* Animated active/colored timeline drawing line */}
+          {/* Animated active timeline drawing line */}
           <motion.div 
             style={{ scaleY, originY: 0 }}
-            className="absolute left-4 md:left-1/2 -translate-x-[1px] top-4 bottom-4 w-[2px] bg-gradient-to-b from-accent via-purple-500 to-transparent" 
+            className="absolute left-4 md:left-1/2 -translate-x-[1px] top-4 bottom-4 w-[2px] bg-gradient-to-b from-op-gold via-op-brown to-transparent" 
           />
 
-          {/* Cinematic scroll-riding glowing orb */}
+          {/* Animated Ship traveling along active route */}
           <motion.div 
-            style={{ top: orbTop }}
-            className="absolute left-4 md:left-1/2 -translate-x-1/2 w-3.5 h-3.5 rounded-full bg-accent shadow-[0_0_15px_#38bdf8] z-30 pointer-events-none"
-          />
+            style={{ top: shipTop }}
+            className="absolute left-4 md:left-1/2 -translate-x-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-[#fffcf5] border border-op-gold text-op-navy flex items-center justify-center shadow-lg z-30 pointer-events-none"
+          >
+            <Ship className="w-4.5 h-4.5 text-op-ocean animate-[bounce_2s_infinite]" />
+          </motion.div>
 
           {/* Staggered Timeline entries */}
           <motion.div 
@@ -170,13 +206,14 @@ export default function Timeline() {
           >
             {entries.map((entry, idx) => {
               const isEven = idx % 2 === 0
+              const isLast = idx === entries.length - 1
               
               return (
                 <div 
                   key={idx}
                   className={`relative flex flex-col md:flex-row items-stretch ${isEven ? 'md:flex-row-reverse' : ''} gap-8 md:gap-0`}
                 >
-                  {/* Glowing Node on the line */}
+                  {/* Milestones marker indicators on path line */}
                   <div className="absolute left-4 md:left-1/2 -translate-x-1/2 top-6 z-25">
                     <motion.div 
                       initial={{ scale: 0.5, opacity: 0 }}
@@ -185,64 +222,96 @@ export default function Timeline() {
                       transition={{ duration: 0.5, delay: idx * 0.1 }}
                       className="relative flex items-center justify-center"
                     >
-                      {/* Interactive indicator circle */}
-                      <div className={`w-4 h-4 rounded-full border-2 border-background transition-all duration-300 ${lineGlows[entry.accent]}`} />
+                      {/* Interactive ring marker */}
+                      <div className={`w-4 h-4 rounded-full border-2 border-[#fffcf5] bg-[#fffcf5] shadow-md z-10 transition-colors ${
+                        entry.accent === 'gold' 
+                          ? 'border-op-gold bg-op-gold shadow-[0_0_10px_#F7C948]' 
+                          : 'border-op-brown/70 bg-op-navy'
+                      }`} />
                       
-                      {/* Ping animation overlay */}
-                      <div className="absolute w-8 h-8 rounded-full bg-accent/10 border border-accent/20 animate-ping opacity-30 pointer-events-none" />
+                      {/* Active indicator ping */}
+                      {entry.accent === 'gold' && (
+                        <div className="absolute w-8 h-8 rounded-full bg-op-gold/20 animate-ping pointer-events-none" />
+                      )}
                     </motion.div>
                   </div>
 
-                  {/* Card Section */}
-                  <div className="w-full md:w-[46%] pl-12 md:pl-0">
+                  {/* Milestones Card Section */}
+                  <div className="w-full md:w-[46%] pl-12 md:pl-0 text-left">
                     <motion.div
                       variants={{
-                        hidden: { opacity: 0, x: isEven ? 45 : -45 },
+                        hidden: { opacity: 0, x: shouldReduceMotion ? 0 : (isEven ? 40 : -40), y: shouldReduceMotion ? 20 : 0 },
                         visible: { 
                           opacity: 1, 
                           x: 0,
-                          transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
+                          y: 0,
+                          transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] }
                         }
                       }}
-                      className={`group relative rounded-2xl bg-surface/30 backdrop-blur-xl border border-text/10 p-6 sm:p-8 hover:scale-[1.02] transition-all duration-500 hover:shadow-2xl hover:shadow-accent/5 ${entry.accentClass} ${borderGlows[entry.accent]}`}
+                      className={`group relative rounded-2xl border-2 p-6 sm:p-8 hover:scale-[1.01] transition-all duration-500 shadow-md text-op-navy ${entry.accentClass}`}
                     >
-                      {/* Interactive mesh highlight */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                      {/* Corner chest-like brackets inside */}
+                      <div className="absolute top-3 left-3 w-3 h-3 border-t border-l border-op-brown/30 pointer-events-none" />
+                      <div className="absolute top-3 right-3 w-3 h-3 border-t border-r border-op-brown/30 pointer-events-none" />
+                      <div className="absolute bottom-3 left-3 w-3 h-3 border-b border-l border-op-brown/30 pointer-events-none" />
+                      <div className="absolute bottom-3 right-3 w-3 h-3 border-b border-r border-op-brown/30 pointer-events-none" />
 
                       <div className="space-y-4 relative z-10">
-                        {/* Meta header */}
-                        <div className="flex items-center justify-between border-b border-text/5 pb-3">
+                        {/* Milestone Meta header */}
+                        <div className="flex items-center justify-between border-b border-op-brown/15 pb-3">
                           <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-xl bg-surface border border-text/10 flex items-center justify-center group-hover:border-accent/25 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                            {/* Dial Wrapper */}
+                            <div className="w-10 h-10 rounded-xl bg-op-navy text-op-parchment flex items-center justify-center shrink-0 border border-op-gold/30">
                               {entry.icon}
                             </div>
-                            <div className="text-left">
-                              <h3 className="font-bold text-text group-hover:text-accent transition-colors duration-300 text-left">
+                            <div>
+                              <h3 className="font-cinzel text-sm sm:text-base font-bold uppercase tracking-wider text-op-navy">
                                 {entry.title}
                               </h3>
-                              <p className="text-xs text-muted text-left">
+                              <p className="text-[10px] text-op-navy/60 font-sans font-medium uppercase tracking-wider">
                                 {entry.subtitle}
                               </p>
                             </div>
                           </div>
-                          <span className="text-2xl sm:text-3xl font-black font-mono bg-gradient-to-r from-accent to-purple-400 bg-clip-text text-transparent opacity-80">
+                          <span className="text-xl sm:text-2xl font-black font-mono text-op-gold bg-clip-text">
                             {entry.year}
                           </span>
                         </div>
 
-                        {/* Bullet achievements */}
-                        <ul className="space-y-3 text-left">
-                          {entry.bullets.map((bullet, bulletIdx) => (
-                            <li key={bulletIdx} className="flex items-start gap-2.5 text-sm leading-relaxed text-muted group-hover:text-text/90 transition-colors duration-300">
-                              <CheckCircle2 className="w-4 h-4 text-accent mt-0.5 shrink-0" />
-                              <span>{bullet}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                        {/* Technical Description */}
+                        <p className="text-xs sm:text-sm text-op-navy/85 leading-relaxed font-sans font-medium">
+                          {entry.description}
+                        </p>
 
-                      {/* Bottom line indicator highlight */}
-                      <div className="w-full h-1 bg-gradient-to-r from-accent/0 via-accent/30 to-purple-400/0 absolute bottom-0 left-0 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-center" />
+                        {/* Technologies Learned Badges */}
+                        <div className="pt-2 border-t border-op-brown/10 space-y-1.5 font-sans">
+                          <span className="text-[9px] font-bold tracking-wider text-op-navy/50 uppercase">Log Inventory acquired:</span>
+                          <div className="flex flex-wrap gap-1">
+                            {entry.technologies.map((t) => (
+                              <span
+                                key={t}
+                                className="px-2 py-0.5 rounded bg-op-brown/10 border border-op-brown/25 text-[9px] font-semibold text-op-brown font-mono"
+                              >
+                                {t}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Special link to projects centerpiece for ElderSense vision */}
+                        {isLast && (
+                          <div className="pt-2">
+                            <a
+                              href="#projects"
+                              className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-op-ocean hover:text-op-navy transition-colors font-sans"
+                            >
+                              <span>Explore active ElderSense Roadmap</span>
+                              <ArrowUpRight className="w-3.5 h-3.5" />
+                            </a>
+                          </div>
+                        )}
+
+                      </div>
                     </motion.div>
                   </div>
 
